@@ -8,6 +8,7 @@
     <title>Patient Signup Page</title>
     
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="{% static 'images/fav.jpg' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
@@ -15,8 +16,8 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="container mt-200">
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
+        <div class="container">
             <div class="col-xl-10 col-lg-11 login-container">
                 <div class="row">
                     <div class="col-lg-7 img-box">
@@ -27,7 +28,7 @@
                             <h5>Welcome !!!</h5>
 
                             <div class="login-row row no-margin">
-                                <label for=""><i class="fas fa-envelope"></i> Name</label>
+                                <label for=""><i class='bx bxs-user'></i> Name</label>
                                 <input type="text" class="form-control form-control-sm">
                             </div>
 
@@ -51,17 +52,17 @@
                             </div>                                      
             <!-------------------------------------------------------------------------------------------------------------------------------->
                             <div class="login-row row no-margin">
-                                <label for=""><i class="fas fa-envelope"></i> Mobile Number</label>
+                                <label for=""><i class="fas fa-mobile-alt"></i> Mobile Number</label>
                                 <input type="numeric" class="form-control form-control-sm">
                             </div>
 
                             <div class="login-row row no-margin">
-                                <label for=""><i class="fas fa-envelope"></i> Address</label>
+                                <label for=""><i class="fas fa-address-card"></i> Address</label>
                                 <textarea class="form-control form-control-sm"></textarea>
                             </div>
 
                             <div class="login-row row no-margin">
-                                <label for=""><i class="fas fa-unlock-alt"></i> Password</label>
+                                <label for=""><i class="fas fa-lock"></i> Password</label>
                                 <input type="password" class="form-control form-control-sm">
                             </div>
 
@@ -85,6 +86,7 @@
 </body>
 
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
