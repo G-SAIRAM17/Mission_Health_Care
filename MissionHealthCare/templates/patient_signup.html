@@ -1,12 +1,11 @@
 {% load static %}
-<!doctype html>
-<html lang="en">
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Signup Page</title>
-    
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="shortcut icon" href="{% static 'images/fav.jpg' %}">
@@ -14,7 +13,6 @@
     <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 </head>
-
 <body>
     <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
         <div class="container">
@@ -24,71 +22,120 @@
                         <img src="{% static 'images/login-banner.png' %}" alt="">
                     </div>
                     <div class="col-lg-5 no-padding">
-                        <div class="login-box">
-                            <h5  style="font-weight: bold;color: black;">Welcome to Patient Signup</h5>
-
-                            <div class="login-row row no-margin">
-                                <label for=""  style="font-weight: bold;color: black;"><i class='bx bxs-user'></i> Name</label>
-                                <input type="text" class="form-control form-control-sm">
-                            </div>
-
-                            <div class="login-row row no-margin">
-                                <label for=""  style="font-weight: bold;color: black;"><i class="fas fa-envelope"></i> Age</label>
-                                <input type="text" class="form-control form-control-sm">
-                            </div>
-            <!-------------------------------------------- Need Modification ------------------------------------------------------------>
-                            <div class="login-row row no-margin" style="display: flex; align-items: center;">
-                                <label for="" style="margin-right: 10px;font-weight: bold;color: black;"><i class="fas fa-envelope"></i> Gender</label>
-                                <div style="display: flex; align-items: center;">
-                                    <div style="display: flex; align-items: center; margin-right: 20px;">
-                                        <input type="radio" id="male" name="gender" class="form-control form-control-sm" value="male" style="margin-right: 5px;">
-                                        <label for="male" style="margin: 0;font-weight: bold;color: black;">Male</label>
-                                    </div>
+                        <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm()">
+                            {% csrf_token %}
+                            <div class="login-box">
+                                <h5 style="font-weight: bold;color: black;">Welcome to Patient Signup</h5>
+                                {% for i in messages %}
+                                    <h3 style="color: red;">{{i}}</h3>
+                                {% endfor %}
+                                <div class="login-row row no-margin">
+                                    <label for="name" style="font-weight: bold;color: black;"><i class='bx bxs-user'></i> Name</label>
+                                    <input type="text" id="name" name="name" class="form-control form-control-sm" maxlength="200" required>
+                                </div>
+                                <div class="login-row row no-margin">
+                                    <label for="age" style="font-weight: bold;color: black;"><i class="fas fa-envelope"></i> Age</label>
+                                    <input type="number" id="age" name="age" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="login-row row no-margin" style="display: flex; align-items: center;">
+                                    <label for="gender" style="margin-right: 10px;font-weight: bold;color: black;"><i class="fas fa-envelope"></i> Gender</label>
                                     <div style="display: flex; align-items: center;">
-                                        <input type="radio" id="female" name="gender" class="form-control form-control-sm" value="female" style="margin-right: 5px;">
-                                        <label for="female" style="margin: 0;font-weight: bold;color: black;">Female</label>
+                                        <div style="display: flex; align-items: center; margin-right: 20px;">
+                                            <input type="radio" id="male" name="gender" value="male" style="margin-right: 5px;" required>
+                                            <label for="male" style="margin: 0;font-weight: bold;color: black;">Male</label>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <input type="radio" id="female" name="gender" value="female" style="margin-right: 5px;" required>
+                                            <label for="female" style="margin: 0;font-weight: bold;color: black;">Female</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>                                      
-            <!-------------------------------------------------------------------------------------------------------------------------------->
-                            <div class="login-row row no-margin">
-                                <label for="" style="font-weight: bold;color: black;"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
-                                <input type="numeric" class="form-control form-control-sm">
+                                <div class="login-row row no-margin">
+                                    <label for="email" style="font-weight: bold;color: black;"><i class="fas fa-envelope"></i> Email id</label>
+                                    <input type="email" id="email" name="email" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="login-row row no-margin">
+                                    <label for="mobile" style="font-weight: bold;color: black;"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
+                                    <input type="text" id="mobile" name="mobile" class="form-control form-control-sm" maxlength="10" required>
+                                </div>
+                                <div class="login-row row no-margin">
+                                    <label for="address" style="font-weight: bold;color: black;"><i class="fas fa-address-card"></i> Address</label>
+                                    <textarea id="address" name="address" class="form-control form-control-sm" required></textarea>
+                                </div>
+                                <div class="login-row row no-margin">
+                                    <label for="password" style="font-weight: bold;color: black;"><i class="fas fa-lock"></i> Password</label>
+                                    <input type="password" id="password" name="password" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="login-row row no-margin">
+                                    <label for="reenterpassword" style="font-weight: bold;color: black;"><i class="fas fa-unlock-alt"></i> Re-enter Password</label>
+                                    <input type="password" id="reenterpassword" name="reenterpassword" class="form-control form-control-sm" required>
+                                </div>
+                                <div class="login-row row no-margin">
+                                    <label for="captcha" style="font-weight: bold;color: black;">Captcha</label>
+                                    <input type="text" id="captcha" name="captcha" required>
+                                    <span id="captchaText"></span> 
+                                    <input type="hidden" id="stored_captcha" name="stored_captcha" value="{{ captcha }}">
+                                </div>
+                                <div class="login-row btnroo row no-margin">
+                                    <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                                </div>
                             </div>
-
-                            <div class="login-row row no-margin">
-                                <label for="" style="font-weight: bold;color: black;"><i class="fas fa-address-card"></i> Address</label>
-                                <textarea class="form-control form-control-sm"></textarea>
-                            </div>
-
-                            <div class="login-row row no-margin">
-                                <label for="" style="font-weight: bold;color: black;"><i class="fas fa-lock"></i> Password</label>
-                                <input type="password" class="form-control form-control-sm">
-                            </div>
-
-                             <div class="login-row row no-margin">
-                                <label for="" style="font-weight: bold;color: black;"><i class="fas fa-unlock-alt"></i> Re-enter Password</label>
-                                <input type="password" class="form-control form-control-sm">
-                            </div>
-
-                             <div class="login-row btnroo row no-margin">
-                               <button class="btn btn-primary btn-lg"> Sign Up</button>
-                            </div>
-                            <div class="login-row btnroo row no-margin">
-                                <button class="btn btn-light btn-lg" style="width: 220px;"> Continue with Google</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</body>
+    <script>
+        function generateCaptcha() {
+            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            var length = 6; // Length of CAPTCHA code
+            var captcha = "";
+            for (var i = 0; i < length; i++) {
+                var randomChar = Math.floor(Math.random() * chars.length);
+                captcha += chars.substring(randomChar, randomChar + 1);
+            }
+            return captcha;
+        }
 
+        // Function to reload CAPTCHA
+        function reloadCaptcha() {
+            var captchaInput = document.getElementById('captcha');
+            var captchaValue = generateCaptcha();
+            document.getElementById('captchaText').textContent = captchaValue; // Update text-based CAPTCHA
+            return captchaValue;
+        }
+
+        // Function to validate form on submission
+        function validateForm(event) {
+            event.preventDefault(); // Prevent form submission
+            var userInput = document.getElementById('captcha').value;
+            var storedCaptcha = document.getElementById('captchaText').textContent;
+
+            if (userInput.toLowerCase() === storedCaptcha.toLowerCase()) {
+                document.getElementById('stored_captcha').value = storedCaptcha; // Set hidden input value
+                document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
+            } else {
+                alert('CAPTCHA verification failed. Please try again.');
+                reloadCaptcha(); // Reload CAPTCHA on failure
+                document.getElementById('captcha').value = ""; // Clear input field
+                return false; // Prevent form submission
+            }
+        }
+
+        // Initialize CAPTCHA on page load
+        window.onload = function() {
+            var captcha = generateCaptcha();
+            document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
+            console.log('Generated CAPTCHA:', captcha);
+        };
+
+    </script>
     <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+</body>
 </html>
