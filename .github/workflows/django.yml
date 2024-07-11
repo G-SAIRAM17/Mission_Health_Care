@@ -9,6 +9,15 @@ on:
 jobs:
   build:
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root  # Replace with your MySQL root password
+          MYSQL_DATABASE: healthcare  # Replace with your MySQL database name
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
