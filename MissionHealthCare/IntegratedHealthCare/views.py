@@ -40,7 +40,7 @@ def psignup(request):
                         <p>Thank you for registering with us. We are excited to have you on board.</p>
                         <p style="color:green;">Enjoy our services!</p>
                         <p>Best regards,</p>
-                        <p>Your Company Team</p>
+                        <p>Mission Integrated Health Care</p>
                     </body>
                 </html>
                 '''
