@@ -1,1 +1,67 @@
-<h1>Welcome to Login Page</h1>
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HTML5 Login Page | Smarteyeapps.com</title>
+    <link rel="shortcut icon" href="{% static '/images/fav.png' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static '/images/fav.jpg' %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/fontawsom-all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="col-xl-10 col-lg-11 login-container">
+                <div class="row">
+                    <div class="col-lg-7 img-box">
+                        <img src="{% static '/images/login-banner.png' %}" alt="">
+                    </div>
+                    <div class="col-lg-5 no-padding">
+                        <div class="login-box">
+                            <form id="loginForm" action="{% url 'plogin' %}" method="POST">
+                                {% csrf_token %}
+                            <h5 style="font-weight: bold;color: black;">Welcome to Patient Login Page!</h5>
+
+                            <div class="login-row row no-margin">
+                                <label for="mobile" style="font-weight: bold;color: black;"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
+                                <input type="text" class="form-control form-control-sm">
+                            </div>
+
+                             <div class="login-row row no-margin">
+                                <label for="password" style="font-weight: bold;color: black;"><i class="fas fa-lock"></i> Password</label>
+                                <input type="password" class="form-control form-control-sm">
+                            </div>
+
+                             <div class="login-row row forrr no-margin">
+                               <p style="font-weight: bold;color: black;"> <input type="checkbox"> Remember Me</p>
+                               <p style="font-weight: bold;color: black;"><a href="">Forget Password?</a></p>
+                            </div>
+
+                             <div class="login-row btnroo row no-margin">
+                               <button class="btn btn-primary btn-sm"> Sign In</button>
+                               <button class="btn btn-light  btn-sm"> Create Account</button>
+                            </div>
+                        </form>
+                            <div class="login-row donroo row no-margin">
+                               <p style="font-weight: bold;color: black;">Dont have an Account ? <a href="{% url 'psignup' %}">Sign Up</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+    <script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static '/js/popper.min.js' %}"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
+    <script src="{% static '/js/script.js' %}"></script>
+</html>
