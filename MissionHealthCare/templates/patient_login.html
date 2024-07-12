@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>HTML5 Login Page | Smarteyeapps.com</title>
+    <title>Patient Login</title>
     <link rel="shortcut icon" href="{% static '/images/fav.png' %}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
     <link rel="shortcut icon" href="{% static '/images/fav.jpg' %}">
@@ -15,41 +15,196 @@
 </head>
 
 <body>
+    <style>
+        *, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.buttons {
+    width: 70px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.blob-btn {
+  --numOfBlobs: 4;
+  --cyan: #b1040e;
+  --dark: #fff;
+  --borderW: 2px;
+  z-index: 1;
+  position: relative;
+  padding: 10px;
+  text-align: center;
+  width: 70px;
+  text-transform: uppercase;
+  color: var(--dark);
+  font-size: 16px;
+  font-weight: bold;
+  background-color: var(--cyan);
+  outline: none;
+  border: none;
+  transition: color 0.5s, background-color 0.5s;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.blob-btn:before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: var(--borderW) solid var(--cyan);
+  border-radius: 10px;
+}
+
+.blob-btn:after {
+  content: "";
+  z-index: -2;
+  position: absolute;
+  left: calc(var(--borderW) * 1.5);
+  top: calc(var(--borderW) * 1.5);
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s 0.2s;
+  border-radius: 10px;
+}
+
+.blob-btn:hover {
+  color: var(--cyan);
+  background-color: var(--dark);
+  border-radius: 10px;
+}
+
+.blob-btn:hover:after {
+  transition: all 0.3s;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.blob-btn__inner {
+  z-index: -1;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: var(--cyan);
+  transition: background 0.5s;
+}
+
+.blob-btn__blobs {
+  position: relative;
+  display: block;
+  height: 100%;
+  filter: url('#goo');
+}
+
+.blob-btn__blob {
+  position: absolute;
+  top: var(--borderW);
+  width: calc(100% / var(--numOfBlobs));
+  height: 100%;
+  background: var(--dark);
+  border-radius: 100%;
+  transform: translate3d(0, 150%, 0) scale(1.7);
+  transition: transform 0.45s;
+}
+
+@supports (filter: url('#goo')) {
+  .blob-btn__blob {
+    transform: translate3d(0, 150%, 0) scale(1.4);
+  }
+}
+
+.blob-btn__blob:nth-child(1) {
+  left: 0;
+  transition-delay: 0s;
+}
+
+.blob-btn__blob:nth-child(2) {
+  left: 25%;
+  transition-delay: 0.08s;
+}
+
+.blob-btn__blob:nth-child(3) {
+  left: 50%;
+  transition-delay: 0.16s;
+}
+
+.blob-btn__blob:nth-child(4) {
+  left: 75%;
+  transition-delay: 0.24s;
+}
+
+.blob-btn:hover .blob-btn__blob {
+  transform: translateZ(0) scale(1.7);
+}
+
+@supports (filter: url('#goo')) {
+  .blob-btn:hover .blob-btn__blob {
+    transform: translateZ(0) scale(1.4);
+  }
+}
+    </style>
+    
     <div class="container-fluid">
         <div class="container">
             <div class="col-xl-10 col-lg-11 login-container">
                 <div class="row">
                     <div class="col-lg-7 img-box">
-                        <img src="{% static '/images/login-banner.png' %}" alt="">
+                        <img src="https://img.freepik.com/free-vector/patient-taking-medical-examination-illustrated_23-2148850285.jpg?t=st=1720780771~exp=1720784371~hmac=1b7d5476e78148819df5c6227d0dbbb2a7cb0a6d840be4285f167ba29feee5e6&w=996" alt="">
                     </div>
                     <div class="col-lg-5 no-padding">
                         <div class="login-box">
                             <form id="loginForm" action="{% url 'plogin' %}" method="POST">
                                 {% csrf_token %}
-                            <h5 style="font-weight: bold;color: black;">Welcome to Patient Login Page!</h5>
+                            <h5 style="font-weight: bold;color: #000000;">Welcome to Patient Login!</h5>
 
                             <div class="login-row row no-margin">
-                                <label for="mobile" style="font-weight: bold;color: black;"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
+                                <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
                                 <input type="text" class="form-control form-control-sm">
                             </div>
 
                              <div class="login-row row no-margin">
-                                <label for="password" style="font-weight: bold;color: black;"><i class="fas fa-lock"></i> Password</label>
+                                <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock"></i> Password</label>
                                 <input type="password" class="form-control form-control-sm">
                             </div>
 
                              <div class="login-row row forrr no-margin">
-                               <p style="font-weight: bold;color: black;"> <input type="checkbox"> Remember Me</p>
-                               <p style="font-weight: bold;color: black;"><a href="">Forget Password?</a></p>
+                               <p style="font-weight: bold;color: #000000;"> <input type="checkbox"> Remember Me</p>
+                               <p style="font-weight: bold;color: #000000;"><a href="" style="color: #b1040e;">Forget Password?</a></p>
                             </div>
 
-                             <div class="login-row btnroo row no-margin">
-                               <button class="btn btn-primary btn-sm"> Sign In</button>
-                               <button class="btn btn-light  btn-sm"> Create Account</button>
+                             <div class="login-row btnroo justify-content-center no-margin">
+                                            <!-- Start: Blob Button -->
+                                            <div class="buttons">
+                                                <button class="blob-btn" style="width:250px !important;border-radius:10px;">
+                                                  Sign in
+                                                  <span class="blob-btn__inner">
+                                                    <span class="blob-btn__blobs">
+                                                      <span class="blob-btn__blob"></span>
+                                                      <span class="blob-btn__blob"></span>
+                                                      <span class="blob-btn__blob"></span>
+                                                      <span class="blob-btn__blob"></span>
+                                                    </span>
+                                                  </span>
+                                                </button>
+                                                <br/>
+                                              </div>                 
+            <!-- End: Blob Button -->
                             </div>
                         </form>
                             <div class="login-row donroo row no-margin">
-                               <p style="font-weight: bold;color: black;">Dont have an Account ? <a href="{% url 'psignup' %}">Sign Up</a></p>
+                               <p style="color: #000000;margin: auto !important;font-size: 18px !important;font-weight: bold;">Dont have an Account ? <a href="{% url 'psignup' %}" style="color:#b1040e;text-decoration: none;">Sign Up</a></p>
                             </div>
                         </div>
                     </div>
