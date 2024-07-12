@@ -12,6 +12,63 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <style>
+.heart-rate {
+  width: 150px;
+  height: 73px;
+  position: relative;
+  margin: 20px auto;
+}
+
+.fade-in {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  top: 0;
+  right: 0;
+  animation: heartRateIn 2.5s linear infinite;
+}
+
+.fade-out {
+  position: absolute;
+  width: 120%;
+  height: 100%;
+  top: 0;
+  left: -120%;
+  animation: heartRateOut 2.5s linear infinite;
+  background: rgba(255, 255, 255, 1);
+  background: -moz-linear-gradient(left, rgb(241, 7, 7) 0%, rgb(230, 9, 9) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
+}
+
+@keyframes heartRateIn {
+  0% {
+    width: 100%;
+  }
+  50% {
+    width: 0;
+  }
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes heartRateOut {
+  0% {
+    left: -120%;
+  }
+  30% {
+    left: -120%;
+  }
+  100% {
+    left: 0;
+  }
+}
+    </style>
 </head>
 <body>
     <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
@@ -22,7 +79,7 @@
                         <img src="{% static 'images/login-banner.png' %}" alt="">
                     </div>
                     <div class="col-lg-5 no-padding">
-                        <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm()">
+                        <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm(event)">
                             {% csrf_token %}
                             <div class="login-box">
                                 <h5 style="font-weight: bold;color: black;">Welcome to Patient Signup</h5>
@@ -86,6 +143,30 @@
             </div>
         </div>
     </div>
+    <div class="loading">
+        <div class="heart-rate">
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="150px" height="73px" viewBox="0 0 150 73" enable-background="new 0 0 150 73" xml:space="preserve">
+            <polyline fill="none" stroke="#009B9E" stroke-width="3" stroke-miterlimit="10" points="0,45.486 38.514,45.486 44.595,33.324 50.676,45.486 57.771,45.486 62.838,55.622 71.959,9 80.067,63.729 84.122,45.486 97.297,45.486 103.379,40.419 110.473,45.486 150,45.486"
+            />
+            </svg>
+            <div class="fade-in"></div>
+            <div class="fade-out"></div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="checkmark">✔</div>
+                    <p>Sign up successful!</p>
+                    <a href="/plogin" class="btn btn-success">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function generateCaptcha() {
             var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -114,7 +195,13 @@
 
             if (userInput.toLowerCase() === storedCaptcha.toLowerCase()) {
                 document.getElementById('stored_captcha').value = storedCaptcha; // Set hidden input value
-                document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
+                // Show loading effect
+                $('.loading').show();
+
+                // Simulate network delay
+                setTimeout(function() {
+                    document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
+                }, 2000);
             } else {
                 alert('CAPTCHA verification failed. Please try again.');
                 reloadCaptcha(); // Reload CAPTCHA on failure
@@ -125,17 +212,17 @@
 
         // Initialize CAPTCHA on page load
         window.onload = function() {
-            var captcha = generateCaptcha();
-            document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
-            console.log('Generated CAPTCHA:', captcha);
-        };
+var captcha = generateCaptcha();
+document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
+console.log('Generated CAPTCHA:', captcha);
+};
 
-    </script>
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+</script>
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
