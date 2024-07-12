@@ -1,335 +1,438 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            * {
-    border: 0;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-:root {
-    --hue: 223;
-    --bg: #fff; /* White background */
-    --fg: hsl(var(--hue)210%,90%);
-    --primary: hsl(var(--hue),90%,55%);
-    --primary-dn: hsl(var(--hue),90%,45%);
-    font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
-}
-body, button {
-    font: 1em/1.5 Hind, sans-serif;
-}
-body {
-    background: var(--bg);
-    color: var(--fg);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-button {
-    animation: reappear 1s steps(1) forwards;
-    background-color: var(--primary);
-    border-radius: 0.2em;
-    color: hsl(0,0%,100%);
-    padding: 0.5em 1em;
-    transition: background-color 0.1s linear;
-    -webkit-appearance: none;
-    appearance: none;
-}
-button:focus, button:hover {
-    background-color: var(--primary-dn);
-}
-button:focus {
-    outline: none;
-}
-button,
-.check-spinner__worm-a,
-.check-spinner__worm-b {
-    visibility: hidden;
-}
-.check-spinner {
-    margin-bottom: 3em;
-    overflow: visible;
-    width: 6.25em;
-    height: 6.25em;
-    background-color: #fff; /* White background */
-}
 
-.check-spinner__worm-b {
-    animation: worm-b 1.2s 1.2s linear forwards;
-    stroke-dashoffset: 0.01;
-}
-.check-spinner__circle {
-    animation: circle 0.2s 2.3s cubic-bezier(0,0,.3,1.33) forwards;
-}
+<head>
+  <style>
+    * {
+      border: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* Animations */
-@keyframes worm-a {
-    from {
+    :root {
+      --hue: 223;
+      --bg: #fff;
+      /* White background */
+      --fg: hsl(var(--hue)210%, 90%);
+      --primary: hsl(var(--hue), 90%, 55%);
+      --primary-dn: hsl(var(--hue), 90%, 45%);
+      font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
+    }
+
+    body,
+    button {
+      font: 1em/1.5 Hind, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      animation: reappear 1s steps(1) forwards;
+      background-color: var(--primary);
+      border-radius: 0.2em;
+      color: hsl(0, 0%, 100%);
+      padding: 0.5em 1em;
+      transition: background-color 0.1s linear;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    button:focus,
+    button:hover {
+      background-color: var(--primary-dn);
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    button,
+    .check-spinner__worm-a,
+    .check-spinner__worm-b {
+      visibility: hidden;
+    }
+
+    .check-spinner {
+      margin-bottom: 3em;
+      overflow: visible;
+      width: 6.25em;
+      height: 6.25em;
+      background-color: #fff;
+      /* White background */
+    }
+
+    .check-spinner__worm-b {
+      animation: worm-b 1.2s 1.2s linear forwards;
+      stroke-dashoffset: 0.01;
+    }
+
+    .check-spinner__circle {
+      animation: circle 0.2s 2.3s cubic-bezier(0, 0, .3, 1.33) forwards;
+    }
+
+    /* Animations */
+    @keyframes worm-a {
+      from {
         stroke-dashoffset: 36.1;
         visibility: visible;
-    }
-    to {
+      }
+
+      to {
         stroke-dashoffset: -252.9;
         visibility: visible;
+      }
     }
-}
-@keyframes worm-b {
-    from {
+
+    @keyframes worm-b {
+      from {
         animation-timing-function: linear;
         stroke-dasharray: 0 0 72.2 341.3;
         visibility: visible;
-    }
-    69.7% {
+      }
+
+      69.7% {
         animation-timing-function: ease-out;
         stroke-dasharray: 0 207 45 341.3;
         visibility: visible;
-    }
-    to {
+      }
+
+      to {
         animation-timing-function: ease-out;
         stroke-dasharray: 0 297 45 341.3;
         visibility: visible;
+      }
     }
-}
-@keyframes circle {
-    from { r: 0; }
-    to { r: 50px; }
-}
-@keyframes reappear {
-    from { visibility: hidden; }
-    to { visibility: visible; }
-}
 
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-}
+    @keyframes circle {
+      from {
+        r: 0;
+      }
 
-.buttons {
-    width: 70px;
-  text-align: center;
-  border-radius: 10px;
-}
+      to {
+        r: 50px;
+      }
+    }
 
-.blob-btn {
-  --numOfBlobs: 4;
-  --cyan: #b1040e;
-  --dark: #fff;
-  --borderW: 2px;
-  z-index: 1;
-  position: relative;
-  padding: 10px;
-  text-align: center;
-  width: 70px;
-  text-transform: uppercase;
-  color: var(--dark);
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--cyan);
-  outline: none;
-  border: none;
-  transition: color 0.5s, background-color 0.5s;
-  cursor: pointer;
-  border-radius: 10px;
-}
+    @keyframes reappear {
+      from {
+        visibility: hidden;
+      }
 
-.blob-btn:before {
-  content: "";
-  z-index: 1;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border: var(--borderW) solid var(--cyan);
-  border-radius: 10px;
-}
+      to {
+        visibility: visible;
+      }
+    }
 
-.blob-btn:after {
-  content: "";
-  z-index: -2;
-  position: absolute;
-  left: calc(var(--borderW) * 1.5);
-  top: calc(var(--borderW) * 1.5);
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s 0.2s;
-  border-radius: 10px;
-}
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
 
-.blob-btn:hover {
-  color: var(--cyan);
-  background-color: var(--dark);
-  border-radius: 10px;
-}
+    body {
+      font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    }
 
-.blob-btn:hover:after {
-  transition: all 0.3s;
-  left: 0;
-  top: 0;
-  border-radius: 10px;
-}
+    .buttons {
+      width: 70px;
+      text-align: center;
+      border-radius: 10px;
+    }
 
-.blob-btn__inner {
-  z-index: -1;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  background: var(--cyan);
-  transition: background 0.5s;
-}
+    .blob-btn {
+      --numOfBlobs: 4;
+      --cyan: #b1040e;
+      --dark: #fff;
+      --borderW: 2px;
+      z-index: 1;
+      position: relative;
+      padding: 10px;
+      text-align: center;
+      width: 70px;
+      text-transform: uppercase;
+      color: var(--dark);
+      font-size: 16px;
+      font-weight: bold;
+      background-color: var(--cyan);
+      outline: none;
+      border: none;
+      transition: color 0.5s, background-color 0.5s;
+      cursor: pointer;
+      border-radius: 10px;
+    }
 
-.blob-btn__blobs {
-  position: relative;
-  display: block;
-  height: 100%;
-  filter: url('#goo');
-}
+    .blob-btn:before {
+      content: "";
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border: var(--borderW) solid var(--cyan);
+      border-radius: 10px;
+    }
 
-.blob-btn__blob {
-  position: absolute;
-  top: var(--borderW);
-  width: calc(100% / var(--numOfBlobs));
-  height: 100%;
-  background: var(--dark);
-  border-radius: 100%;
-  transform: translate3d(0, 150%, 0) scale(1.7);
-  transition: transform 0.45s;
-}
+    .blob-btn:after {
+      content: "";
+      z-index: -2;
+      position: absolute;
+      left: calc(var(--borderW) * 1.5);
+      top: calc(var(--borderW) * 1.5);
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s 0.2s;
+      border-radius: 10px;
+    }
 
-@supports (filter: url('#goo')) {
-  .blob-btn__blob {
-    transform: translate3d(0, 150%, 0) scale(1.4);
-  }
-}
+    .blob-btn:hover {
+      color: var(--cyan);
+      background-color: var(--dark);
+      border-radius: 10px;
+    }
 
-.blob-btn__blob:nth-child(1) {
-  left: 0;
-  transition-delay: 0s;
-}
+    .blob-btn:hover:after {
+      transition: all 0.3s;
+      left: 0;
+      top: 0;
+      border-radius: 10px;
+    }
 
-.blob-btn__blob:nth-child(2) {
-  left: 25%;
-  transition-delay: 0.08s;
-}
+    .blob-btn__inner {
+      z-index: -1;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      background: var(--cyan);
+      transition: background 0.5s;
+    }
 
-.blob-btn__blob:nth-child(3) {
-  left: 50%;
-  transition-delay: 0.16s;
-}
+    .blob-btn__blobs {
+      position: relative;
+      display: block;
+      height: 100%;
+      filter: url('#goo');
+    }
 
-.blob-btn__blob:nth-child(4) {
-  left: 75%;
-  transition-delay: 0.24s;
-}
+    .blob-btn__blob {
+      position: absolute;
+      top: var(--borderW);
+      width: calc(100% / var(--numOfBlobs));
+      height: 100%;
+      background: var(--dark);
+      border-radius: 100%;
+      transform: translate3d(0, 150%, 0) scale(1.7);
+      transition: transform 0.45s;
+    }
 
-.blob-btn:hover .blob-btn__blob {
-  transform: translateZ(0) scale(1.7);
-}
+    @supports (filter: url('#goo')) {
+      .blob-btn__blob {
+        transform: translate3d(0, 150%, 0) scale(1.4);
+      }
+    }
 
-@supports (filter: url('#goo')) {
-  .blob-btn:hover .blob-btn__blob {
-    transform: translateZ(0) scale(1.4);
-  }
-}
-        </style>
-        <body>
-            <svg class="check-spinner" viewBox="0 0 100 100" width="100px" height="100px">
-                <defs>
-                    <linearGradient id="cs-grad-1" x1="0.5" y1="0" x2="0.5" y2="1">
-                        <stop offset="0%" stop-color="hsl(0,0%,100%)" />
-                        <stop offset="100%" stop-color="hsl(0,0%,80%)" />
-                    </linearGradient>
-                    <linearGradient id="cs-grad-2a" x1="0.5" y1="0" x2="0.5" y2="1" gradientTransform="rotate(90,0.5,0.5)">
-                        <stop offset="0%" stop-color="hsl(123,90%,55%)" />
-                        <stop offset="100%" stop-color="hsl(183,90%,25%)" />
-                    </linearGradient>
-                    <linearGradient id="cs-grad-2b" x1="0.5" y1="0" x2="0.5" y2="1">
-                        <stop offset="0%" stop-color="hsl(123,90%,55%)" />
-                        <stop offset="100%" stop-color="hsl(183,90%,25%)" />
-                    </linearGradient>
-                </defs>
-                <circle class="check-spinner__circle" cx="50" cy="50" r="0" fill="url(#cs-grad-1)" />
-                <circle class="check-spinner__worm-a" cx="50" cy="50" r="46" fill="none" stroke="url(#cs-grad-2a)" stroke-width="8" stroke-linecap="round" stroke-dasharray="72.2 216.8" stroke-dashoffset="36.1" transform="rotate(-90,50,50)" />
-                <path class="check-spinner__worm-b" d="M 17.473 17.473 C 25.797 9.15 37.297 4 50 4 C 75.4 4 96 24.6 96 50 C 96 75.4 75.4 96 50 96 C 24.6 96 4 75.4 4 50 C 4 44.253 6.909 36.33 12.5 35 C 21.269 32.913 35 50 35 50 L 45 60 L 65 40" fill="none" stroke="url(#cs-grad-2b)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="0 0 72.2 341.3" />
-            </svg>
-            <form action="{% url 'psuccess' %}" method="POST">
-                {% csrf_token %}
-            <div class="buttons">
-                <button class="blob-btn" style="width:250px !important;border-radius:10px;">
-                  Click Here to Login
-                  <span class="blob-btn__inner">
-                    <span class="blob-btn__blobs">
-                      <span class="blob-btn__blob"></span>
-                      <span class="blob-btn__blob"></span>
-                      <span class="blob-btn__blob"></span>
-                      <span class="blob-btn__blob"></span>
-                    </span>
-                  </span>
-                </button>
-                <br/>
-              </div> 
-            </form> 
-            <script>
-                // for restarting the animation in check
-window.addEventListener("DOMContentLoaded",() => {
-	const replay = document.getElementById("replay");
-	let resetTimeout = null;
-	let btnTimeout = null;
-	// prevent keyboard interaction while the button is hidden
-	const tempHideBtn = btn => {
-		if (btn) {
-			const btnCS = window.getComputedStyle(btn);
-			let btnAnimDur = btnCS.getPropertyValue("animation-duration");
+    .blob-btn__blob:nth-child(1) {
+      left: 0;
+      transition-delay: 0s;
+    }
 
-			btnAnimDur = +btnAnimDur.split("s")[0] * 1e3;
-			btn.disabled = true;
+    .blob-btn__blob:nth-child(2) {
+      left: 25%;
+      transition-delay: 0.08s;
+    }
 
-			clearTimeout(btnTimeout);
-			btnTimeout = setTimeout(() => {
-				btn.disabled = false;
-			}, btnAnimDur);
-		}
-	};
+    .blob-btn__blob:nth-child(3) {
+      left: 50%;
+      transition-delay: 0.16s;
+    }
 
-	if (replay) {
-		let spinnerEls = [
-			"circle",
-			"worm-a",
-			"worm-b"
-		];
-		spinnerEls = spinnerEls.map(e => document.querySelector(`.check-spinner__${e}`));
-		// hide the button at start
-		tempHideBtn(replay);
+    .blob-btn__blob:nth-child(4) {
+      left: 75%;
+      transition-delay: 0.24s;
+    }
 
-		replay.addEventListener("click",function() {
-			// kill the animations
-			spinnerEls.forEach(e => {
-				e.style.animation = "none";
-			});
-			this.style.animation = "none";
+    .blob-btn:hover .blob-btn__blob {
+      transform: translateZ(0) scale(1.7);
+    }
 
-			// restore them, hide the button again
-			clearTimeout(resetTimeout);
-			resetTimeout = setTimeout(() => {
-				spinnerEls.forEach(e => {
-					e.removeAttribute("style");
-				});
-				this.removeAttribute("style");
-				tempHideBtn(this);
-			}, 0);
-		});
-	}
-});
-            </script>
-        </body>
-    </head>
+    @supports (filter: url('#goo')) {
+      .blob-btn:hover .blob-btn__blob {
+        transform: translateZ(0) scale(1.4);
+      }
+    }
+
+    .preloader {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #fafafa;
+      z-index: 9999;
+      background-image: url(https://saintpatrickshospital.com/images/icons/page-loader.gif);
+      background-size: 200px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .preloader:before {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+      margin-top: 30px;
+      color: #b1040e;
+      font-size: 1.2em;
+      opacity: .90;
+      font-weight: 700;
+      letter-spacing: 1px;
+      content: "Loading";
+      text-transform: uppercase;
+      transition: none;
+    }
+  </style>
+
+<body>
+  <div class="preloader" style="display: none;"></div>
+  <div>
+    <span style="display: flex;">
+      <p style="color: #666666; font-size: 30px;font-weight: bold; color: #b1040e;margin-right: 5px;">Registration</p>
+      <p style="color: #666666; font-size: 30px;font-weight: bold; color: #000000;">Successful</p>
+    </span>
+  </div><br>
+  <svg class="check-spinner" viewBox="0 0 100 100" width="100px" height="100px">
+    <defs>
+      <linearGradient id="cs-grad-1" x1="0.5" y1="0" x2="0.5" y2="1">
+        <stop offset="0%" stop-color="hsl(0,0%,100%)" />
+        <stop offset="100%" stop-color="hsl(0,0%,80%)" />
+      </linearGradient>
+      <linearGradient id="cs-grad-2a" x1="0.5" y1="0" x2="0.5" y2="1" gradientTransform="rotate(90,0.5,0.5)">
+        <stop offset="0%" stop-color="hsl(123,90%,55%)" />
+        <stop offset="100%" stop-color="hsl(183,90%,25%)" />
+      </linearGradient>
+      <linearGradient id="cs-grad-2b" x1="0.5" y1="0" x2="0.5" y2="1">
+        <stop offset="0%" stop-color="hsl(123,90%,55%)" />
+        <stop offset="100%" stop-color="hsl(183,90%,25%)" />
+      </linearGradient>
+    </defs>
+    <circle class="check-spinner__circle" cx="50" cy="50" r="0" fill="#D3D3D3" />
+    <circle class="check-spinner__worm-a" cx="50" cy="50" r="46" fill="none" stroke="#008000" stroke-width="8"
+      stroke-linecap="round" stroke-dasharray="72.2 216.8" stroke-dashoffset="36.1" transform="rotate(-90,50,50)" />
+    <path class="check-spinner__worm-b"
+      d="M 17.473 17.473 C 25.797 9.15 37.297 4 50 4 C 75.4 4 96 24.6 96 50 C 96 75.4 75.4 96 50 96 C 24.6 96 4 75.4 4 50 C 4 44.253 6.909 36.33 12.5 35 C 21.269 32.913 35 50 35 50 L 45 60 L 65 40"
+      fill="none" stroke="#00C000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
+      stroke-dasharray="0 0 72.2 341.3" />
+  </svg>
+  <form action="{% url 'psuccess' %}" method="POST">
+    {% csrf_token %}
+    <div class="buttons" style="margin-right: 180px!important;">
+      <button class="blob-btn" style="width:250px !important;border-radius:10px;" onclick="myFunction()">
+        Click Here to Login
+        <span class="blob-btn__inner">
+          <span class="blob-btn__blobs">
+            <span class="blob-btn__blob"></span>
+            <span class="blob-btn__blob"></span>
+            <span class="blob-btn__blob"></span>
+            <span class="blob-btn__blob"></span>
+          </span>
+        </span>
+      </button>
+      <br />
+    </div>
+  </form>
+  <script>
+    //loading effect
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+      // Remove the reloading flag from sessionStorage
+      sessionStorage.removeItem("reloading");
+
+      // Call your function to show the preloader
+      myFunction(); // Replace with your actual function name
+    }
+
+    function myFunction() {
+      // Show the preloader
+      document.querySelector('.preloader').style.display = 'flex';
+
+      // Simulate a delay (replace with actual loading logic)
+      setTimeout(function () {
+        // Hide the preloader after some time (example: 2 seconds)
+        document.querySelector('.preloader').style.display = 'none';
+      }, 1500); // Adjust the delay time as needed
+    }
+
+    // Set reloading flag in sessionStorage on page load
+    sessionStorage.setItem("reloading", "true");
+
+    // for restarting the animation in check
+    window.addEventListener("DOMContentLoaded", () => {
+      const replay = document.getElementById("replay");
+      let resetTimeout = null;
+      let btnTimeout = null;
+      // prevent keyboard interaction while the button is hidden
+      const tempHideBtn = btn => {
+        if (btn) {
+          const btnCS = window.getComputedStyle(btn);
+          let btnAnimDur = btnCS.getPropertyValue("animation-duration");
+
+          btnAnimDur = +btnAnimDur.split("s")[0] * 1e3;
+          btn.disabled = true;
+
+          clearTimeout(btnTimeout);
+          btnTimeout = setTimeout(() => {
+            btn.disabled = false;
+          }, btnAnimDur);
+        }
+      };
+
+      if (replay) {
+        let spinnerEls = [
+          "circle",
+          "worm-a",
+          "worm-b"
+        ];
+        spinnerEls = spinnerEls.map(e => document.querySelector(`.check-spinner__${e}`));
+        // hide the button at start
+        tempHideBtn(replay);
+
+        replay.addEventListener("click", function () {
+          // kill the animations
+          spinnerEls.forEach(e => {
+            e.style.animation = "none";
+          });
+          this.style.animation = "none";
+
+          // restore them, hide the button again
+          clearTimeout(resetTimeout);
+          resetTimeout = setTimeout(() => {
+            spinnerEls.forEach(e => {
+              e.removeAttribute("style");
+            });
+            this.removeAttribute("style");
+            tempHideBtn(this);
+          }, 0);
+        });
+      }
+    });
+  </script>
+</body>
+</head>
+
 </html>

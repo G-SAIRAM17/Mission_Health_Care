@@ -2,374 +2,391 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Signup Page</title>
-    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="shortcut icon" href="{% static 'images/fav.jpg' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <style>
-        .loading {
-            display: none;
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            background-color: rgba(255, 255, 255, 0);
-            top: 0;
-            left: 0;
-            z-index: 9999;
-        }
-        .heart-rate {
-  width: 150px;
-  height: 73px;
-  position: relative;
-  margin: 20px auto;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Signup Page</title>
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="shortcut icon" href="{% static 'images/fav.jpg' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <style>
+    *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
 
-.fade-in {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  right: 0;
-  animation: heartRateIn 2.5s linear infinite;
-}
+    body {
+      font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    }
 
-.fade-out {
-  position: absolute;
-  width: 120%;
-  height: 100%;
-  top: 0;
-  left: -120%;
-  animation: heartRateOut 2.5s linear infinite;
-  background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
-  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
-  background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
-  background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
-  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0) 100%);
-}
+    .buttons {
+      width: 70px;
+      text-align: center;
+      border-radius: 10px;
+    }
 
-@keyframes heartRateIn {
-  0% {
-    width: 100%;
-  }
-  50% {
-    width: 0;
-  }
-  100% {
-    width: 0;
-  }
-}
+    .blob-btn {
+      --numOfBlobs: 3;
+      --cyan: #b1040e;
+      --dark: #fff;
+      --borderW: 2px;
+      z-index: 1;
+      position: relative;
+      padding: 10px;
+      text-align: center;
+      width: 70px;
+      text-transform: uppercase;
+      color: var(--dark);
+      font-size: 16px;
+      font-weight: bold;
+      background-color: var(--cyan);
+      outline: none;
+      border: none;
+      transition: color 0.5s, background-color 0.5s;
+      cursor: pointer;
+      border-radius: 10px;
+    }
 
-@keyframes heartRateOut {
-  0% {
-    left: -120%;
-  }
-  30% {
-    left: -120%;
-  }
-  100% {
-    left: 0;
-  }
-}
+    .blob-btn:before {
+      content: "";
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border: var(--borderW) solid var(--cyan);
+      border-radius: 10px;
+    }
 
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-}
+    .blob-btn:after {
+      content: "";
+      z-index: -2;
+      position: absolute;
+      left: calc(var(--borderW) * 1.5);
+      top: calc(var(--borderW) * 1.5);
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s 0.2s;
+      border-radius: 10px;
+    }
 
-.buttons {
-    width: 70px;
-  text-align: center;
-  border-radius: 10px;
-}
+    .blob-btn:hover {
+      color: var(--cyan);
+      background-color: var(--dark);
+      border-radius: 10px;
+    }
 
-.blob-btn {
-  --numOfBlobs: 4;
-  --cyan: #b1040e;
-  --dark: #fff;
-  --borderW: 2px;
-  z-index: 1;
-  position: relative;
-  padding: 10px;
-  text-align: center;
-  width: 70px;
-  text-transform: uppercase;
-  color: var(--dark);
-  font-size: 16px;
-  font-weight: bold;
-  background-color: var(--cyan);
-  outline: none;
-  border: none;
-  transition: color 0.5s, background-color 0.5s;
-  cursor: pointer;
-  border-radius: 10px;
-}
+    .blob-btn:hover:after {
+      transition: all 0.3s;
+      left: 0;
+      top: 0;
+      border-radius: 10px;
+    }
 
-.blob-btn:before {
-  content: "";
-  z-index: 1;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border: var(--borderW) solid var(--cyan);
-  border-radius: 10px;
-}
+    .blob-btn__inner {
+      z-index: -1;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      background: var(--cyan);
+      transition: background 0.5s;
+    }
 
-.blob-btn:after {
-  content: "";
-  z-index: -2;
-  position: absolute;
-  left: calc(var(--borderW) * 1.5);
-  top: calc(var(--borderW) * 1.5);
-  width: 100%;
-  height: 100%;
-  transition: all 0.3s 0.2s;
-  border-radius: 10px;
-}
+    .blob-btn__blobs {
+      position: relative;
+      display: block;
+      height: 100%;
+      filter: url('#goo');
+    }
 
-.blob-btn:hover {
-  color: var(--cyan);
-  background-color: var(--dark);
-  border-radius: 10px;
-}
+    .blob-btn__blob {
+      position: absolute;
+      top: var(--borderW);
+      width: calc(100% / var(--numOfBlobs));
+      height: 100%;
+      background: var(--dark);
+      border-radius: 100%;
+      transform: translate3d(0, 150%, 0) scale(1.7);
+      transition: transform 0.45s;
+    }
 
-.blob-btn:hover:after {
-  transition: all 0.3s;
-  left: 0;
-  top: 0;
-  border-radius: 10px;
-}
+    @supports (filter: url('#goo')) {
+      .blob-btn__blob {
+        transform: translate3d(0, 150%, 0) scale(1.4);
+      }
+    }
 
-.blob-btn__inner {
-  z-index: -1;
-  overflow: hidden;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-  background: var(--cyan);
-  transition: background 0.5s;
-}
+    .blob-btn__blob:nth-child(1) {
+      left: 0;
+      transition-delay: 0s;
+    }
 
-.blob-btn__blobs {
-  position: relative;
-  display: block;
-  height: 100%;
-  filter: url('#goo');
-}
+    .blob-btn__blob:nth-child(2) {
+      left: 25%;
+      transition-delay: 0.08s;
+    }
 
-.blob-btn__blob {
-  position: absolute;
-  top: var(--borderW);
-  width: calc(100% / var(--numOfBlobs));
-  height: 100%;
-  background: var(--dark);
-  border-radius: 100%;
-  transform: translate3d(0, 150%, 0) scale(1.7);
-  transition: transform 0.45s;
-}
+    .blob-btn__blob:nth-child(3) {
+      left: 50%;
+      transition-delay: 0.16s;
+    }
 
-@supports (filter: url('#goo')) {
-  .blob-btn__blob {
-    transform: translate3d(0, 150%, 0) scale(1.4);
-  }
-}
+    .blob-btn__blob:nth-child(4) {
+      left: 75%;
+      transition-delay: 0.24s;
+    }
 
-.blob-btn__blob:nth-child(1) {
-  left: 0;
-  transition-delay: 0s;
-}
+    .blob-btn:hover .blob-btn__blob {
+      transform: translateZ(0) scale(1.7);
+    }
 
-.blob-btn__blob:nth-child(2) {
-  left: 25%;
-  transition-delay: 0.08s;
-}
+    @supports (filter: url('#goo')) {
+      .blob-btn:hover .blob-btn__blob {
+        transform: translateZ(0) scale(1.4);
+      }
+    }
 
-.blob-btn__blob:nth-child(3) {
-  left: 50%;
-  transition-delay: 0.16s;
-}
+    .preloader {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #fafafa;
+      z-index: 9999;
+      background-image: url(https://saintpatrickshospital.com/images/icons/page-loader.gif);
+      background-size: 200px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
-.blob-btn__blob:nth-child(4) {
-  left: 75%;
-  transition-delay: 0.24s;
-}
-
-.blob-btn:hover .blob-btn__blob {
-  transform: translateZ(0) scale(1.7);
-}
-
-@supports (filter: url('#goo')) {
-  .blob-btn:hover .blob-btn__blob {
-    transform: translateZ(0) scale(1.4);
-  }
-}
-    </style>
+    .preloader:before {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      text-align: center;
+      margin: 0 auto;
+      margin-top: 30px;
+      color: #b1040e;
+      font-size: 1.8em;
+      opacity: .90;
+      font-weight: 700;
+      letter-spacing: 1px;
+      content: "Loading";
+      text-transform: uppercase;
+      transition: none;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
-        <div class="container">
-            <div class="col-xl-10 col-lg-11 login-container">
-                <div class="row">
-                    <div class="col-lg-7 img-box">
-                        <img src="{% static 'images/Designer.png' %}" alt="">
-                    </div>
-                    <div class="col-lg-5 no-padding">
-                        <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm(event)">
-                            {% csrf_token %}
-                            <div class="login-box">
-                                <h5 style="font-weight: bold;color: #000000;">Welcome to Patient Signup</h5>
-                                {% for message in messages %}
-                                    <h3 style="color: #b1040e;">{{ message }}</h3>
-                                {% endfor %}
-                                <div class="login-row row no-margin">
-                                    <label for="name" style="font-weight: bold;color: #000000;"><i class='bx bxs-user'></i> Name</label>
-                                    <input type="text" id="name" name="name" class="form-control form-control-sm" maxlength="200" required>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="age" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Age</label>
-                                    <input type="number" id="age" name="age" class="form-control form-control-sm" required>
-                                </div>
-                                <div class="login-row row no-margin" style="display: flex; align-items: center;">
-                                    <label for="gender" style="margin-right: 10px;font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Gender</label>
-                                    <div style="display: flex; align-items: center;">
-                                        <div style="display: flex; align-items: center; margin-right: 20px;">
-                                            <input type="radio" id="male" name="gender" value="male" style="margin-right: 5px;" required>
-                                            <label for="male" style="margin: 0;font-weight: bold;color: #000000;">Male</label>
-                                        </div>
-                                        <div style="display: flex; align-items: center;">
-                                            <input type="radio" id="female" name="gender" value="female" style="margin-right: 5px;" required>
-                                            <label for="female" style="margin: 0;font-weight: bold;color: #000000;">Female</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="email" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Email id</label>
-                                    <input type="email" id="email" name="email" class="form-control form-control-sm" required>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
-                                    <input type="text" id="mobile" name="mobile" class="form-control form-control-sm" maxlength="10" required>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="address" style="font-weight: bold;color: #000000;"><i class="fas fa-address-card"></i> Address</label>
-                                    <textarea id="address" name="address" class="form-control form-control-sm" required></textarea>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock"></i> Password</label>
-                                    <input type="password" id="password" name="password" class="form-control form-control-sm" required>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="reenterpassword" style="font-weight: bold;color: #000000;"><i class="fas fa-unlock-alt"></i> Re-enter Password</label>
-                                    <input type="password" id="reenterpassword" name="reenterpassword" class="form-control form-control-sm" required>
-                                </div>
-                                <div class="login-row row no-margin">
-                                    <label for="captcha" style="font-weight: bold;color: #000000;">Captcha</label>
-                                    <input type="text" id="captcha" name="captcha" required>
-                                    <span id="captchaText"></span>
-                                    <input type="hidden" id="stored_captcha" name="stored_captcha" value="{{ captcha }}">
-                                </div>
-                                <div class="login-row btnroo row no-margin">
-                                    <div class="buttons">
-                                        <button type="submit" class="blob-btn" style="width:250px !important;border-radius:10px;">
-                                          Sign up
-                                          <span class="blob-btn__inner">
-                                            <span class="blob-btn__blobs">
-                                              <span class="blob-btn__blob"></span>
-                                              <span class="blob-btn__blob"></span>
-                                              <span class="blob-btn__blob"></span>
-                                              <span class="blob-btn__blob"></span>
-                                            </span>
-                                          </span>
-                                        </button>
-                                        <br/>
-                                      </div>  
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="loading">
-        <div class="heart-rate">
-            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="150px" height="73px" viewBox="0 0 150 73" enable-background="new 0 0 150 73" xml:space="preserve">
-              <polyline fill="none" stroke="#b1040e" stroke-width="5" stroke-miterlimit="20" points="0,45.486 38.514,45.486 44.595,33.324 50.676,45.486 57.771,45.486 62.838,55.622 71.959,9 80.067,63.729 84.122,45.486 97.297,45.486 103.379,40.419 110.473,45.486 150,45.486"
-              />
-            </svg>
-            <div class="fade-in"></div>
-            <div class="fade-out"></div>
+  <div class="preloader" style="display: none;"></div>
+  <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
+    <div class="container">
+      <div class="col-xl-10 col-lg-11 login-container">
+        <div class="row">
+          <div class="col-lg-7 img-box">
+            <img src="{% static 'images/Designer.png' %}" alt="">
           </div>
+          <div class="col-lg-5 no-padding">
+            <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm(event)">
+              {% csrf_token %}
+              <div class="login-box">
+                <h5 style="font-weight: bold;color: #000000; margin-top: -20px;">Welcome to Patient Signup</h5>
+                {% for message in messages %}
+                <p style="color: #b1040e; font-size: 15px;font-weight: bold; margin-top: -10px;">{{ message }}</p>
+                {% endfor %}
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="name" style="font-weight: bold;color: #000000;"><i class='bx bxs-user'></i> Name</label>
+                  <input type="text" name="name"
+                    style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="age" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Age</label>
+                  <input type="numeric" name="age"
+                    style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
+                </div>
+                <div class="login-row row no-margin" style="display: flex; align-items: center;margin-bottom: -10px;">
+                  <label for="gender" style="margin-right: 10px;font-weight: bold;color: #000000;"><i
+                      class="fas fa-envelope"></i> Gender</label>
+                  <div style="display: flex; align-items: center; ">
+                    <div style="display: flex; align-items: center; margin-right: 20px;">
+                      <input type="radio" id="male" name="gender" value="male"
+                        style="margin-right: 5px; margin-top: 4px; accent-color: #b1040e;" required>
+                      <label for="male"
+                        style="margin: 0;font-weight: bold;color: #000000; margin-top: 4px;">Male</label>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                      <input type="radio" id="female" name="gender" value="female"
+                        style="margin-right: 5px; margin-top: 4px; accent-color: #b1040e;" required>
+                      <label for="female"
+                        style="margin: 0;font-weight: bold;color: #000000; margin-top: 4px;">Female</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="email" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Email
+                    id</label>
+                  <input type="email" name="email"
+                    style=" width: 290px; margin-top: 0px; color: #b1040e;font-weight: bold;" required>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt"></i> Mobile
+                    Number</label>
+                  <input type="text" name="mobile"
+                    style=" width: 290px; margin-top: 0px; color: #b1040e;font-weight: bold;" required>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="address" style="font-weight: bold;color: #000000;"><i class="fas fa-address-card"></i>
+                    Address</label>
+                  <textarea id="address" name="address" class="form-control form-control-sm"
+                    style="color: #b1040e;font-weight: bold;" required></textarea>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock"></i>
+                    Password</label>
+                  <input type="password" name="password"
+                    style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="reenterpassword" style="font-weight: bold;color: #000000;"><i
+                      class="fas fa-unlock-alt"></i> Re-enter Password</label>
+                  <input type="password" name="reenterpassword"
+                    style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
+                </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                  <label for="captcha" style="font-weight: bold;color: #000000;">Captcha</label>
+                  <div style="display: flex; margin-top: 13px;margin-right: 120px;">
+                    <span id="captchaText" style="color: #b1040e; font-weight: bold;"></span>
+                    <input type="text" id="captcha" name="captcha"
+                      style="margin-left: 15px; width: 120px;color: #b1040e;font-weight: bold;"
+                      class="justify-content-center" required>
+                  </div>
+                  <input type="hidden" id="stored_captcha" name="stored_captcha" value="{{ captcha }}">
+
+                </div>
+                <div class="login-row btnroo row no-margin">
+                  <div class="buttons">
+                    <button type="submit" class="blob-btn" style="width:250px !important;border-radius:10px;"
+                      onclick="myFunction()">
+                      Sign up
+                      <span class="blob-btn__inner">
+                        <span class="blob-btn__blobs">
+                          <span class="blob-btn__blob"></span>
+                          <span class="blob-btn__blob"></span>
+                          <span class="blob-btn__blob"></span>
+                          <span class="blob-btn__blob"></span>
+                        </span>
+                      </span>
+                    </button>
+                    <br />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        function generateCaptcha() {
-            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-            var length = 6; // Length of CAPTCHA code
-            var captcha = "";
-            for (var i = 0; i < length; i++) {
-                var randomChar = Math.floor(Math.random() * chars.length);
-                captcha += chars.substring(randomChar, randomChar + 1);
-            }
-            return captcha;
-        }
+  <script>
+    //loading effect
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+      // Remove the reloading flag from sessionStorage
+      sessionStorage.removeItem("reloading");
 
-        // Function to reload CAPTCHA
-        function reloadCaptcha() {
-            var captchaInput = document.getElementById('captcha');
-            var captchaValue = generateCaptcha();
-            document.getElementById('captchaText').textContent = captchaValue; // Update text-based CAPTCHA
-            return captchaValue;
-        }
+      // Call your function to show the preloader
+      myFunction(); // Replace with your actual function name
+    }
 
-        // Function to validate form on submission
-        function validateForm(event) {
-            event.preventDefault(); // Prevent form submission
-            var userInput = document.getElementById('captcha').value;
-            var storedCaptcha = document.getElementById('captchaText').textContent;
+    function myFunction() {
+      // Show the preloader
+      document.querySelector('.preloader').style.display = 'flex';
 
-            if (userInput.toLowerCase() === storedCaptcha.toLowerCase()) {
-                document.getElementById('stored_captcha').value = storedCaptcha; // Set hidden input value
-                // Show loading effect
-                $('.loading').show();
+      // Simulate a delay (replace with actual loading logic)
+      setTimeout(function () {
+        // Hide the preloader after some time (example: 2 seconds)
+        document.querySelector('.preloader').style.display = 'none';
+      }, 1500); // Adjust the delay time as needed
+    }
 
-                // Simulate network delay
-                setTimeout(function() {
-                    document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
-                }, 2000);
-            } else {
-                alert('CAPTCHA verification failed. Please try again.');
-                reloadCaptcha(); // Reload CAPTCHA on failure
-                document.getElementById('captcha').value = ""; // Clear input field
-                return false; // Prevent form submission
-            }
-        }
+    // Set reloading flag in sessionStorage on page load
+    sessionStorage.setItem("reloading", "true");
 
-        // Initialize CAPTCHA on page load
-        window.onload = function() {
-            var captcha = generateCaptcha();
-            document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
-            console.log('Generated CAPTCHA:', captcha);
-        };
-    </script>
-    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+    function generateCaptcha() {
+      var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      var length = 6; // Length of CAPTCHA code
+      var captcha = "";
+      for (var i = 0; i < length; i++) {
+        var randomChar = Math.floor(Math.random() * chars.length);
+        captcha += chars.substring(randomChar, randomChar + 1);
+      }
+      return captcha;
+    }
+
+    // Function to reload CAPTCHA
+    function reloadCaptcha() {
+      var captchaInput = document.getElementById('captcha');
+      var captchaValue = generateCaptcha();
+      document.getElementById('captchaText').textContent = captchaValue; // Update text-based CAPTCHA
+      return captchaValue;
+    }
+
+    // Function to validate form on submission
+    function validateForm(event) {
+      event.preventDefault(); // Prevent form submission
+      var userInput = document.getElementById('captcha').value;
+      var storedCaptcha = document.getElementById('captchaText').textContent;
+
+      if (userInput.toLowerCase() === storedCaptcha.toLowerCase()) {
+        document.getElementById('stored_captcha').value = storedCaptcha; // Set hidden input value
+        // Show loading effect
+        $('.loading').show();
+
+        // Simulate network delay
+        setTimeout(function () {
+          document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
+        }, 2000);
+      } else {
+        alert('CAPTCHA verification failed. Please try again.');
+        reloadCaptcha(); // Reload CAPTCHA on failure
+        document.getElementById('captcha').value = ""; // Clear input field
+        return false; // Prevent form submission
+      }
+    }
+
+    // Initialize CAPTCHA on page load
+    window.onload = function () {
+      var captcha = generateCaptcha();
+      document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
+      console.log('Generated CAPTCHA:', captcha);
+      var reloading = sessionStorage.getItem("reloading");
+      if (reloading) {
+        sessionStorage.removeItem("reloading");
+        myFunction();
+      }
+    };
+  </script>
+  <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
+
 </html>
