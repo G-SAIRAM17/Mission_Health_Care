@@ -90,7 +90,7 @@
                         <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm(event)">
                             {% csrf_token %}
                             <div class="login-box">
-                                <h5 style="font-weight: bold;color: black;">Welcome to Patient Signup</h5>
+                                <h5 style="font-weight: bold;color: #000000;">Welcome to Patient Signup</h5>
                                 {% for message in messages %}
                                     <h3 style="color: #b1040e;">{{ message }}</h3>
                                 {% endfor %}
@@ -142,7 +142,7 @@
                                     <input type="hidden" id="stored_captcha" name="stored_captcha" value="{{ captcha }}">
                                 </div>
                                 <div class="login-row btnroo row no-margin">
-                                    <button type="submit" class="btn btn-primary btn-lg" style="color: rgb(139, 223, 212)!important;">Sign Up</button>
+                                    <button type="submit" class="btn btn-lg" style="width:140px !important;background-color:  #b1040e;color: #fff;border-radius: 10px!important;margin: auto !important;font-size: 22px !important;">Sign Up</button>
                                 </div>
                             </div>
                         </form>
