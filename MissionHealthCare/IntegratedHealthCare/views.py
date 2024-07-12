@@ -425,7 +425,7 @@ def psignup(request):
                 try:
                     msg.send()
                     messages.success(request, 'Registration successful. Confirmation email sent.')
-                    return redirect('plogin') 
+                    return redirect('psuccess') 
                 except Exception as e:
                     messages.error(request, f'Failed to send email: {str(e)}')
                     return redirect('psignup')  
@@ -438,3 +438,10 @@ def psignup(request):
 
 def plogin(request):
     return render(request, 'patient_login.html')
+  
+from django.shortcuts import render, redirect
+
+def psuccess(request):
+    if request.method == 'POST':
+        return redirect('plogin')
+    return render(request, 'psuccess.html')
