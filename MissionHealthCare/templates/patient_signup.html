@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
   <style>
+    /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
     *,
     *:before,
     *:after {
@@ -156,6 +157,9 @@
       }
     }
 
+    /*-------------------------------------------Blob button CSS ends-----------------------------------------------------*/
+
+    /*-------------------------------------------Loading Effect CSS starts-----------------------------------------------------*/
     .preloader {
       position: fixed;
       left: 0;
@@ -188,18 +192,27 @@
       text-transform: uppercase;
       transition: none;
     }
+
+    /*-------------------------------------------Loading effect CSS ends-----------------------------------------------------*/
   </style>
 </head>
 
 <body>
+  <!-------------------------------------------Loading Effect starts---------------------------------------------------------------->
   <div class="preloader" style="display: none;"></div>
+  <!-------------------------------------------Loading Effect ends---------------------------------------------------------------->
+
   <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
     <div class="container">
       <div class="col-xl-10 col-lg-11 login-container">
         <div class="row">
+          <!-------------------------------------------Side Image --------------------------------------------------------------------------->
           <div class="col-lg-7 img-box">
             <img src="{% static 'images/Designer.png' %}" alt="">
           </div>
+          <!-------------------------------------------Side Image --------------------------------------------------------------------------->
+
+          <!-------------------------------------------Signup Form starts---------------------------------------------------------------->
           <div class="col-lg-5 no-padding">
             <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm(event)">
               {% csrf_token %}
@@ -266,6 +279,7 @@
                   <input type="password" name="reenterpassword"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
+                <!-------------------------------------------Captcha starts------------------------------------------------------------------->
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
                   <label for="captcha" style="font-weight: bold;color: #000000;">Captcha</label>
                   <div style="display: flex; margin-top: 13px;margin-right: 120px;">
@@ -275,8 +289,10 @@
                       class="justify-content-center" required>
                   </div>
                   <input type="hidden" id="stored_captcha" name="stored_captcha" value="{{ captcha }}">
-
                 </div>
+                <!-------------------------------------------Captcha ends------------------------------------------------------------------->
+
+                <!--------------------------------------------------Blob Button Effect starts---------------------------------------------------------------->
                 <div class="login-row btnroo row no-margin">
                   <div class="buttons">
                     <button type="submit" class="blob-btn" style="width:250px !important;border-radius:10px;"
@@ -294,9 +310,12 @@
                     <br />
                   </div>
                 </div>
+                <!-------------------------------------------Blob Button Effect ends---------------------------------------------------------------->
               </div>
             </form>
+
           </div>
+          <!-------------------------------------------Signup Form ends ------------------------------------------------------------------->
         </div>
       </div>
     </div>
