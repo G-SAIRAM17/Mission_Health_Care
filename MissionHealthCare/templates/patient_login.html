@@ -16,6 +16,7 @@
 
 <body>
   <style>
+    /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
     *,
     *:before,
     *:after {
@@ -158,6 +159,9 @@
       }
     }
 
+    /*-------------------------------------------Blob button CSS ends-----------------------------------------------------*/
+
+    /*-------------------------------------------Loading Effect CSS starts-----------------------------------------------------*/
     .preloader {
       position: fixed;
       left: 0;
@@ -190,17 +194,26 @@
       text-transform: uppercase;
       transition: none;
     }
+
+    /*-------------------------------------------Loading Effect CSS ends-----------------------------------------------------*/
   </style>
+  <!-------------------------------------------Loading Effect starts---------------------------------------------------------------->
   <div class="preloader" style="display: none;"></div>
+  <!-------------------------------------------Loading Effect ends---------------------------------------------------------------->
+
   <div class="container-fluid">
     <div class="container">
       <div class="col-xl-10 col-lg-11 login-container">
         <div class="row">
+          <!-------------------------------------------Side Image starts------------------------------------------------------------------->
           <div class="col-lg-7 img-box">
             <img
               src="https://img.freepik.com/free-vector/patient-taking-medical-examination-illustrated_23-2148850285.jpg?t=st=1720780771~exp=1720784371~hmac=1b7d5476e78148819df5c6227d0dbbb2a7cb0a6d840be4285f167ba29feee5e6&w=996"
               alt="">
           </div>
+          <!-------------------------------------------Side Image ends------------------------------------------------------------------->
+
+          <!-------------------------------------------Login Page starts------------------------------------------------------------------->
           <div class="col-lg-5 no-padding">
             <div class="login-box">
               <form id="loginForm" action="{% url 'plogin' %}" method="POST">
@@ -220,6 +233,7 @@
                   <input type="password" name="password"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
+                <!-------------------------------------------Captcha starts------------------------------------------------------------------->
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
                   <label for="captcha" style="font-weight: bold;color: #000000;">Captcha</label>
                   <div style="display: flex; margin-top: 13px;margin-right: 120px;">
@@ -229,16 +243,15 @@
                       class="justify-content-center" required>
                   </div>
                   <input type="hidden" id="stored_captcha" name="stored_captcha" value="{{ captcha }}">
-
                 </div>
-
+                <!-------------------------------------------Captcha  ends------------------------------------------------------------------->
                 <div class="login-row row forrr no-margin">
                   <p style="font-weight: bold;color: #000000;"> <input type="checkbox" style="accent-color: #b1040e;">
                     Remember Me</p>
                   <p style="font-weight: bold;color: #000000;"><a href="" style="color: #b1040e;">Forget Password?</a>
                   </p>
                 </div>
-
+                <!-------------------------------------------Blob Button starts------------------------------------------------------------------->
                 <div class="login-row btnroo justify-content-center no-margin">
                   <!-- Start: Blob Button -->
                   <div class="buttons">
@@ -257,7 +270,9 @@
                   </div>
                   <!-- End: Blob Button -->
                 </div>
+                <!-------------------------------------------Blob Button ends------------------------------------------------------------------->
               </form>
+              <!-------------------------------------------Login Page ends------------------------------------------------------------------->
               <div class="login-row donroo row no-margin">
                 <p style="color: #000000;margin: auto !important;font-size: 18px !important;font-weight: bold;">Dont
                   have an Account ? <a href="{% url 'psignup' %}" style="color:#b1040e;text-decoration: none;">Sign
