@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patient Signup Page</title>
+  <title>Doctor Signup Page</title>
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="shortcut icon" href="{% static 'images/fav.jpg' %}">
@@ -214,26 +214,31 @@
 
           <!-------------------------------------------Signup Form starts---------------------------------------------------------------->
           <div class="col-lg-5 no-padding">
-            <form id="signupForm" action="{% url 'psignup' %}" method="POST" onsubmit="return validateForm(event)">
+            <form id="signupForm" action="{% url 'dsignup' %}" method="POST" onsubmit="return validateForm(event)">
               {% csrf_token %}
               <div class="login-box">
-                <h5 style="font-weight: bold;color: #000000; margin-top: -20px;">Welcome to Patient Signup</h5>
+                <h5 style="font-weight: bold;color: #000000; margin-top: -0px;">Welcome to Doctor Signup</h5>
                 {% for message in messages %}
                 <p style="color: #b1040e; font-size: 15px;font-weight: bold; margin-top: -10px;">{{ message }}</p>
                 {% endfor %}
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
-                  <label for="name" style="font-weight: bold;color: #000000;"><i class='bx bxs-user'></i> Name</label>
+                  <label for="name" style="font-weight: bold;color: #000000;"><i class='bx bxs-user' style="color: #b1040e;"></i> Name</label>
                   <input type="text" name="name"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
-                  <label for="age" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Age</label>
-                  <input type="numeric" name="age"
+                  <label for="specialist" style="font-weight: bold;color: #000000;"><i class="fas fa-user-md" style="color: #b1040e;"></i> Specialist</label>
+                  <input type="text" name="specialist"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
+                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                    <label for="hname" style="font-weight: bold;color: #000000;"><i class="fas fa-hospital" style="color: #b1040e;"></i> Hospital Name</label>
+                    <input type="text" name="hname"
+                      style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
+                  </div>
                 <div class="login-row row no-margin" style="display: flex; align-items: center;margin-bottom: -10px;">
                   <label for="gender" style="margin-right: 10px;font-weight: bold;color: #000000;"><i
-                      class="fas fa-envelope"></i> Gender</label>
+                      class="fas fa-venus-mars" style="color: #b1040e;"></i> Gender</label>
                   <div style="display: flex; align-items: center; ">
                     <div style="display: flex; align-items: center; margin-right: 20px;">
                       <input type="radio" id="male" name="gender" value="male"
@@ -250,32 +255,26 @@
                   </div>
                 </div>
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
-                  <label for="email" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope"></i> Email
+                  <label for="email" style="font-weight: bold;color: #000000;"><i class="fas fa-envelope" style="color: #b1040e;"></i> Email
                     id</label>
                   <input type="email" name="email"
                     style=" width: 290px; margin-top: 0px; color: #b1040e;font-weight: bold;" required>
                 </div>
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
-                  <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt"></i> Mobile
+                  <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt" style="color: #b1040e;"></i> Mobile
                     Number</label>
                   <input type="text" name="mobile"
                     style=" width: 290px; margin-top: 0px; color: #b1040e;font-weight: bold;" required>
                 </div>
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
-                  <label for="address" style="font-weight: bold;color: #000000;"><i class="fas fa-address-card"></i>
-                    Address</label>
-                  <textarea id="address" name="address" class="form-control form-control-sm"
-                    style="color: #b1040e;font-weight: bold;" required></textarea>
-                </div>
-                <div class="login-row row no-margin" style="margin-bottom: -10px;">
-                  <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock"></i>
+                  <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock" style="color: #b1040e;"></i>
                     Password</label>
                   <input type="password" name="password"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
                 <div class="login-row row no-margin" style="margin-bottom: -10px;">
                   <label for="reenterpassword" style="font-weight: bold;color: #000000;"><i
-                      class="fas fa-unlock-alt"></i> Re-enter Password</label>
+                      class="fas fa-unlock-alt" style="color: #b1040e;"></i> Re-enter Password</label>
                   <input type="password" name="reenterpassword"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
@@ -296,7 +295,7 @@
                 <div class="login-row btnroo row no-margin">
                   <div class="buttons">
                     <button type="submit" class="blob-btn" style="width:250px !important;border-radius:10px;"
-                      onclick="myFunction()">
+                      onclick="myFunction1()">
                       Sign up
                       <span class="blob-btn__inner">
                         <span class="blob-btn__blobs">
@@ -341,6 +340,17 @@
         // Hide the preloader after some time (example: 2 seconds)
         document.querySelector('.preloader').style.display = 'none';
       }, 1500); // Adjust the delay time as needed
+    }
+  //Loading Effect after signup
+    function myFunction1() {
+      // Show the preloader
+      document.querySelector('.preloader').style.display = 'flex';
+
+      // Simulate a delay (replace with actual loading logic)
+      setTimeout(function () {
+        // Hide the preloader after some time (example: 2 seconds)
+        document.querySelector('.preloader').style.display = 'none';
+      }, 3500); // Adjust the delay time as needed
     }
 
     // Set reloading flag in sessionStorage on page load
@@ -399,6 +409,18 @@
         myFunction();
       }
     };
+      //Disabling Right Click
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    });
+
+  // Disabling F12 key
+  document.addEventListener('keydown', function(e) {
+    // Check if F12 key is pressed
+    if (e.key === 'F12') {
+        e.preventDefault();
+    }
+    });
   </script>
   <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
   <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Patient Login</title>
+  <title>Doctor Login</title>
   <link rel="shortcut icon" href="{% static '/images/fav.png' %}" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
   <link rel="shortcut icon" href="{% static '/images/fav.jpg' %}">
@@ -216,19 +216,19 @@
           <!-------------------------------------------Login Page starts------------------------------------------------------------------->
           <div class="col-lg-5 no-padding">
             <div class="login-box">
-              <form id="loginForm" action="{% url 'plogin' %}" method="POST">
+              <form id="loginForm" action="{% url 'dlogin' %}" method="POST">
                 {% csrf_token %}
-                <h5 style="font-weight: bold;color: #000000;">Welcome to Patient Login!</h5>
+                <h5 style="font-weight: bold;color: #000000;">Welcome to Doctor Login!</h5>
 
                 <div class="login-row row no-margin">
-                  <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt"></i> Mobile
+                  <label for="mobile" style="font-weight: bold;color: #000000;"><i class="fas fa-mobile-alt" style="color: #b1040e;"></i> Mobile
                     Number</label>
                   <input type="text" name="mobile"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
                 </div>
 
                 <div class="login-row row no-margin">
-                  <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock"></i>
+                  <label for="password" style="font-weight: bold;color: #000000;"><i class="fas fa-lock" style="color: #b1040e;"></i>
                     Password</label>
                   <input type="password" name="password"
                     style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;" required>
@@ -275,7 +275,7 @@
               <!-------------------------------------------Login Page ends------------------------------------------------------------------->
               <div class="login-row donroo row no-margin">
                 <p style="color: #000000;margin: auto !important;font-size: 18px !important;font-weight: bold;">Dont
-                  have an Account ? <a href="{% url 'psignup' %}" style="color:#b1040e;text-decoration: none;">Sign
+                  have an Account ? <a href="{% url 'dsignup' %}" style="color:#b1040e;text-decoration: none;">Sign
                     Up</a></p>
               </div>
             </div>
@@ -368,6 +368,20 @@
       myFunction();
     }
   };
+
+  //Disabling Right Click
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    });
+
+  // Disabling F12 key
+  document.addEventListener('keydown', function(e) {
+    // Check if F12 key is pressed
+    if (e.key === 'F12') {
+        e.preventDefault();
+    }
+    });
+
 </script>
 
 </html>

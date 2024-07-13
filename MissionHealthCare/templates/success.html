@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <title>Patient Registration Success</title>
   <style>
     /*-------------------------------------------Checkmark Animation CSS starts-----------------------------------------------------*/
     * {
@@ -397,7 +398,7 @@
       of your account.Start exploring and enjoy your experience with us!</p>
   </div><br>
   <!-------------------------------------------Login button starts---------------------------------------------------------------->
-  <form action="{% url 'psuccess' %}" method="POST">
+  <form action="{% url 'success' '{{source}}' %}" method="POST">
     {% csrf_token %}
     <div class="buttons" style="margin-right: 180px!important;">
       <button class="blob-btn" style="width:250px !important;border-radius:10px;" onclick="myFunction()">
@@ -704,7 +705,18 @@
 
       poof();
     };
+      //Disabling Right Click
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    });
 
+  // Disabling F12 key
+  document.addEventListener('keydown', function(e) {
+    // Check if F12 key is pressed
+    if (e.key === 'F12') {
+        e.preventDefault();
+    }
+    });
   </script>
 </body>
 </head>
