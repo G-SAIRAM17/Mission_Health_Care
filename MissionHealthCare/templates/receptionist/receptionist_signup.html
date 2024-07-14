@@ -1,0 +1,452 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Signup Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="{% static 'images/fav.jpg' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fontawsom-all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <style>
+        /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        }
+
+        .buttons {
+            width: 70px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .blob-btn {
+            --numOfBlobs: 3;
+            --cyan: #b1040e;
+            --dark: #fff;
+            --borderW: 2px;
+            z-index: 1;
+            position: relative;
+            padding: 10px;
+            text-align: center;
+            width: 70px;
+            text-transform: uppercase;
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: bold;
+            background-color: var(--cyan);
+            outline: none;
+            border: none;
+            transition: color 0.5s, background-color 0.5s;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .blob-btn:before {
+            content: "";
+            z-index: 1;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border: var(--borderW) solid var(--cyan);
+            border-radius: 10px;
+        }
+
+        .blob-btn:after {
+            content: "";
+            z-index: -2;
+            position: absolute;
+            left: calc(var(--borderW) * 1.5);
+            top: calc(var(--borderW) * 1.5);
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s 0.2s;
+            border-radius: 10px;
+        }
+
+        .blob-btn:hover {
+            color: var(--cyan);
+            background-color: var(--dark);
+            border-radius: 10px;
+        }
+
+        .blob-btn:hover:after {
+            transition: all 0.3s;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        .blob-btn__inner {
+            z-index: -1;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: var(--cyan);
+            transition: background 0.5s;
+        }
+
+        .blob-btn__blobs {
+            position: relative;
+            display: block;
+            height: 100%;
+            filter: url('#goo');
+        }
+
+        .blob-btn__blob {
+            position: absolute;
+            top: var(--borderW);
+            width: calc(100% / var(--numOfBlobs));
+            height: 100%;
+            background: var(--dark);
+            border-radius: 100%;
+            transform: translate3d(0, 150%, 0) scale(1.7);
+            transition: transform 0.45s;
+        }
+
+        @supports (filter: url('#goo')) {
+            .blob-btn__blob {
+                transform: translate3d(0, 150%, 0) scale(1.4);
+            }
+        }
+
+        .blob-btn__blob:nth-child(1) {
+            left: 0;
+            transition-delay: 0s;
+        }
+
+        .blob-btn__blob:nth-child(2) {
+            left: 25%;
+            transition-delay: 0.08s;
+        }
+
+        .blob-btn__blob:nth-child(3) {
+            left: 50%;
+            transition-delay: 0.16s;
+        }
+
+        .blob-btn__blob:nth-child(4) {
+            left: 75%;
+            transition-delay: 0.24s;
+        }
+
+        .blob-btn:hover .blob-btn__blob {
+            transform: translateZ(0) scale(1.7);
+        }
+
+        @supports (filter: url('#goo')) {
+            .blob-btn:hover .blob-btn__blob {
+                transform: translateZ(0) scale(1.4);
+            }
+        }
+
+        /*-------------------------------------------Blob button CSS ends-----------------------------------------------------/ /-------------------------------------------Loading Effect CSS starts-----------------------------------------------------*/
+        .preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #fafafa;
+            z-index: 9999;
+            background-image: url(https://saintpatrickshospital.com/images/icons/page-loader.gif);
+            background-size: 200px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .preloader:before {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 30px;
+            color: #b1040e;
+            font-size: 1.8em;
+            opacity: .90;
+            font-weight: 700;
+            letter-spacing: 1px;
+            content: "Loading";
+            text-transform: uppercase;
+            transition: none;
+        }
+
+        /*-------------------------------------------Loading effect CSS ends-----------------------------------------------------*/
+    </style>
+</head>
+
+<body>
+    <!-------------------------------------------Loading Effect starts---------------------------------------------------------------->
+    <div class="preloader" style="display: none;"></div>
+    <!-------------------------------------------Loading Effect ends---------------------------------------------------------------->
+
+    <div class="container-fluid d-flex align-items-center justify-content-center" style="height:90vh;">
+        <div class="container">
+            <div class="col-xl-10 col-lg-11 login-container">
+                <div class="row">
+                    <!-------------------------------------------Side Image --------------------------------------------------------------------------->
+                    <div class="col-lg-7 img-box">
+                        <img src="{% static 'images/Designer.png' %}" alt="">
+                    </div>
+                    <!-------------------------------------------Side Image --------------------------------------------------------------------------->
+
+                    <!-------------------------------------------Signup Form starts---------------------------------------------------------------->
+                    <div class="col-lg-5 no-padding">
+                        <form id="signupForm" action="{% url 'rsignup' %}" method="POST"
+                            onsubmit="return validateForm(event)">
+                            {% csrf_token %}
+                            <div class="login-box">
+                                <h5 style="font-weight: bold;color: #000000; margin-top: -20px;font-size: 17px;">Welcome
+                                    to Receptionist Signup</h5>
+                                {% for message in messages %}
+                                <p style="color: #b1040e; font-size: 15px;font-weight: bold; margin-top: -10px;">{{
+                                    message }}</p>
+                                {% endfor %}
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="name" style="font-weight: bold;color: #000000;"><i class='bx bxs-user'
+                                            style="color: #b1040e;"></i> Name</label>
+                                    <input type="text" name="name"
+                                        style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="hname" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-hospital" style="color: #b1040e;"></i> Hospital Name</label>
+                                    <input type="text" name="hname"
+                                        style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <div class="login-row row no-margin"
+                                    style="display: flex; align-items: center;margin-bottom: -10px;">
+                                    <label for="gender" style="margin-right: 10px;font-weight: bold;color: #000000;"><i
+                                            class="fas fa-venus-mars" style="color: #b1040e;"></i> Gender</label>
+                                    <div style="display: flex; align-items: center; ">
+                                        <div style="display: flex; align-items: center; margin-right: 20px;">
+                                            <input type="radio" id="male" name="gender" value="male"
+                                                style="margin-right: 5px; margin-top: 4px; accent-color: #b1040e;"
+                                                required>
+                                            <label for="male"
+                                                style="margin: 0;font-weight: bold;color: #000000; margin-top: 4px;">Male</label>
+                                        </div>
+                                        <div style="display: flex; align-items: center;">
+                                            <input type="radio" id="female" name="gender" value="female"
+                                                style="margin-right: 5px; margin-top: 4px; accent-color: #b1040e;"
+                                                required>
+                                            <label for="female"
+                                                style="margin: 0;font-weight: bold;color: #000000; margin-top: 4px;">Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="email" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-envelope" style="color: #b1040e;"></i> Email
+                                        id</label>
+                                    <input type="email" name="email"
+                                        style=" width: 290px; margin-top: 0px; color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="mobile" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-mobile-alt" style="color: #b1040e;"></i> Mobile
+                                        Number</label>
+                                    <input type="text" name="mobile"
+                                        style=" width: 290px; margin-top: 0px; color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="address" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-address-card" style="color: #b1040e;"></i>
+                                        Address</label>
+                                    <textarea id="address" name="address" class="form-control form-control-sm"
+                                        style="color: #b1040e;font-weight: bold;" required></textarea>
+                                </div>
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="password" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-lock" style="color: #b1040e;"></i>
+                                        Password</label>
+                                    <input type="password" name="password"
+                                        style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="reenterpassword" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-unlock-alt" style="color: #b1040e;"></i> Re-enter
+                                        Password</label>
+                                    <input type="password" name="reenterpassword"
+                                        style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <!-------------------------------------------Captcha starts------------------------------------------------------------------->
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="captcha" style="font-weight: bold;color: #000000;">Captcha</label>
+                                    <div style="display: flex; margin-top: 13px;margin-right: 120px;">
+                                        <span id="captchaText" style="color: #b1040e; font-weight: bold;"></span>
+                                        <input type="text" id="captcha" name="captcha"
+                                            style="margin-left: 15px; width: 120px;color: #b1040e;font-weight: bold;"
+                                            class="justify-content-center" required>
+                                    </div>
+                                    <input type="hidden" id="stored_captcha" name="stored_captcha"
+                                        value="{{ captcha }}">
+                                </div>
+                                <!-------------------------------------------Captcha ends------------------------------------------------------------------->
+
+                                <!--------------------------------------------------Blob Button Effect starts---------------------------------------------------------------->
+                                <div class="login-row btnroo row no-margin">
+                                    <div class="buttons">
+                                        <button type="submit" class="blob-btn"
+                                            style="width:250px !important;border-radius:10px;" onclick="myFunction1()">
+                                            Sign up
+                                            <span class="blob-btn__inner">
+                                                <span class="blob-btn__blobs">
+                                                    <span class="blob-btn__blob"></span>
+                                                    <span class="blob-btn__blob"></span>
+                                                    <span class="blob-btn__blob"></span>
+                                                    <span class="blob-btn__blob"></span>
+                                                </span>
+                                            </span>
+                                        </button>
+                                        <br />
+                                    </div>
+                                </div>
+                                <!-------------------------------------------Blob Button Effect ends---------------------------------------------------------------->
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-------------------------------------------Signup Form ends ------------------------------------------------------------------->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //loading effect
+        var reloading = sessionStorage.getItem("reloading");
+        if (reloading) {
+            // Remove the reloading flag from sessionStorage
+            sessionStorage.removeItem("reloading");
+
+            // Call your function to show the preloader
+            myFunction(); // Replace with your actual function name
+        }
+
+        function myFunction() {
+            // Show the preloader
+            document.querySelector('.preloader').style.display = 'flex';
+
+            // Simulate a delay (replace with actual loading logic)
+            setTimeout(function () {
+                // Hide the preloader after some time (example: 2 seconds)
+                document.querySelector('.preloader').style.display = 'none';
+            }, 1500); // Adjust the delay time as needed
+        }
+        //Loading Effect after signup
+        function myFunction1() {
+            // Show the preloader
+            document.querySelector('.preloader').style.display = 'flex';
+
+            // Simulate a delay (replace with actual loading logic)
+            setTimeout(function () {
+                // Hide the preloader after some time (example: 2 seconds)
+                document.querySelector('.preloader').style.display = 'none';
+            }, 3500); // Adjust the delay time as needed
+        }
+
+        // Set reloading flag in sessionStorage on page load
+        sessionStorage.setItem("reloading", "true");
+
+        function generateCaptcha() {
+            var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            var length = 6; // Length of CAPTCHA code
+            var captcha = "";
+            for (var i = 0; i < length; i++) {
+                var randomChar = Math.floor(Math.random() * chars.length);
+                captcha += chars.substring(randomChar, randomChar + 1);
+            }
+            return captcha;
+        }
+
+        // Function to reload CAPTCHA
+        function reloadCaptcha() {
+            var captchaInput = document.getElementById('captcha');
+            var captchaValue = generateCaptcha();
+            document.getElementById('captchaText').textContent = captchaValue; // Update text-based CAPTCHA
+            return captchaValue;
+        }
+
+        // Function to validate form on submission
+        function validateForm(event) {
+            event.preventDefault(); // Prevent form submission
+            var userInput = document.getElementById('captcha').value;
+            var storedCaptcha = document.getElementById('captchaText').textContent;
+
+            if (userInput.toLowerCase() === storedCaptcha.toLowerCase()) {
+                document.getElementById('stored_captcha').value = storedCaptcha; // Set hidden input value
+                // Show loading effect
+                $('.loading').show();
+
+                // Simulate network delay
+                setTimeout(function () {
+                    document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
+                }, 2000);
+            } else {
+                alert('CAPTCHA verification failed. Please try again.');
+                reloadCaptcha(); // Reload CAPTCHA on failure
+                document.getElementById('captcha').value = ""; // Clear input field
+                return false; // Prevent form submission
+            }
+        }
+
+        // Initialize CAPTCHA on page load
+        window.onload = function () {
+            var captcha = generateCaptcha();
+            document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
+            console.log('Generated CAPTCHA:', captcha);
+            var reloading = sessionStorage.getItem("reloading");
+            if (reloading) {
+                sessionStorage.removeItem("reloading");
+                myFunction();
+            }
+        };
+        //Disabling Right Click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // Disabling F12 key
+        document.addEventListener('keydown', function (e) {
+            // Check if F12 key is pressed
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+        });
+    </script>
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,405 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Receptionist Login</title>
+    <link rel="shortcut icon" href="{% static '/images/fav.png' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static '/images/fav.jpg' %}">
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/fontawsom-all.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" />
+</head>
+
+<body>
+    <style>
+        /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/ 
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+        }
+
+        .buttons {
+            width: 70px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .blob-btn {
+            --numOfBlobs: 4;
+            --cyan: #b1040e;
+            --dark: #fff;
+            --borderW: 2px;
+            z-index: 1;
+            position: relative;
+            padding: 10px;
+            text-align: center;
+            width: 70px;
+            text-transform: uppercase;
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: bold;
+            background-color: var(--cyan);
+            outline: none;
+            border: none;
+            transition: color 0.5s, background-color 0.5s;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .blob-btn:before {
+            content: "";
+            z-index: 1;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border: var(--borderW) solid var(--cyan);
+            border-radius: 10px;
+        }
+
+        .blob-btn:after {
+            content: "";
+            z-index: -2;
+            position: absolute;
+            left: calc(var(--borderW) * 1.5);
+            top: calc(var(--borderW) * 1.5);
+            width: 100%;
+            height: 100%;
+            transition: all 0.3s 0.2s;
+            border-radius: 10px;
+        }
+
+        .blob-btn:hover {
+            color: var(--cyan);
+            background-color: var(--dark);
+            border-radius: 10px;
+        }
+
+        .blob-btn:hover:after {
+            transition: all 0.3s;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+        }
+
+        .blob-btn__inner {
+            z-index: -1;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: var(--cyan);
+            transition: background 0.5s;
+        }
+
+        .blob-btn__blobs {
+            position: relative;
+            display: block;
+            height: 100%;
+            filter: url('#goo');
+        }
+
+        .blob-btn__blob {
+            position: absolute;
+            top: var(--borderW);
+            width: calc(100% / var(--numOfBlobs));
+            height: 100%;
+            background: var(--dark);
+            border-radius: 100%;
+            transform: translate3d(0, 150%, 0) scale(1.7);
+            transition: transform 0.45s;
+        }
+
+        @supports (filter: url('#goo')) {
+            .blob-btn__blob {
+                transform: translate3d(0, 150%, 0) scale(1.4);
+            }
+        }
+
+        .blob-btn__blob:nth-child(1) {
+            left: 0;
+            transition-delay: 0s;
+        }
+
+        .blob-btn__blob:nth-child(2) {
+            left: 25%;
+            transition-delay: 0.08s;
+        }
+
+        .blob-btn__blob:nth-child(3) {
+            left: 50%;
+            transition-delay: 0.16s;
+        }
+
+        .blob-btn__blob:nth-child(4) {
+            left: 75%;
+            transition-delay: 0.24s;
+        }
+
+        .blob-btn:hover .blob-btn__blob {
+            transform: translateZ(0) scale(1.7);
+        }
+
+        @supports (filter: url('#goo')) {
+            .blob-btn:hover .blob-btn__blob {
+                transform: translateZ(0) scale(1.4);
+            }
+        }
+
+        /*-------------------------------------------Blob button CSS ends-----------------------------------------------------/ /-------------------------------------------Loading Effect CSS starts-----------------------------------------------------*/ 
+        .preloader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: #fafafa;
+            z-index: 9999;
+            background-image: url(https://saintpatrickshospital.com/images/icons/page-loader.gif);
+            background-size: 200px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .preloader:before {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 30px;
+            color: #b1040e;
+            font-size: 1.8em;
+            opacity: .90;
+            font-weight: 700;
+            letter-spacing: 1px;
+            content: "Loading";
+            text-transform: uppercase;
+            transition: none;
+        }
+
+        /*-------------------------------------------Loading Effect CSS ends-----------------------------------------------------*/
+    </style>
+    <!-------------------------------------------Loading Effect starts---------------------------------------------------------------->
+    <div class="preloader" style="display: none;"></div>
+    <!-------------------------------------------Loading Effect ends---------------------------------------------------------------->
+
+    <div class="container-fluid">
+        <div class="container">
+            <div class="col-xl-10 col-lg-11 login-container">
+                <div class="row">
+                    <!-------------------------------------------Side Image starts------------------------------------------------------------------->
+                    <div class="col-lg-7 img-box">
+                        <img src="https://img.freepik.com/free-vector/patient-taking-medical-examination-illustrated_23-2148850285.jpg?t=st=1720780771~exp=1720784371~hmac=1b7d5476e78148819df5c6227d0dbbb2a7cb0a6d840be4285f167ba29feee5e6&w=996"
+                            alt="">
+                    </div>
+                    <!-------------------------------------------Side Image ends------------------------------------------------------------------->
+
+                    <!-------------------------------------------Login Page starts------------------------------------------------------------------->
+                    <div class="col-lg-5 no-padding">
+                        <div class="login-box">
+                            <form id="loginForm" action="{% url 'rlogin' %}" method="POST">
+                                {% csrf_token %}
+                                <h5 style="font-weight: bold;color: #000000;font-size: 17px;">Welcome to Receptionist
+                                    Login!</h5>
+
+                                <div class="login-row row no-margin">
+                                    <label for="mobile" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-mobile-alt" style="color: #b1040e;"></i> Mobile
+                                        Number</label>
+                                    <input type="text" name="mobile"
+                                        style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+
+                                <div class="login-row row no-margin">
+                                    <label for="password" style="font-weight: bold;color: #000000;"><i
+                                            class="fas fa-lock" style="color: #b1040e;"></i>
+                                        Password</label>
+                                    <input type="password" name="password"
+                                        style=" width: 290px; margin-top: 0px;color: #b1040e;font-weight: bold;"
+                                        required>
+                                </div>
+                                <!-------------------------------------------Captcha starts------------------------------------------------------------------->
+                                <div class="login-row row no-margin" style="margin-bottom: -10px;">
+                                    <label for="captcha" style="font-weight: bold;color: #000000;">Captcha</label>
+                                    <div style="display: flex; margin-top: 13px;margin-right: 120px;">
+                                        <span id="captchaText" style="color: #b1040e; font-weight: bold;"></span>
+                                        <input type="text" id="captcha" name="captcha"
+                                            style="margin-left: 15px; width: 120px;color: #b1040e;font-weight: bold;"
+                                            class="justify-content-center" required>
+                                    </div>
+                                    <input type="hidden" id="stored_captcha" name="stored_captcha"
+                                        value="{{ captcha }}">
+                                </div>
+                                <!-------------------------------------------Captcha  ends------------------------------------------------------------------->
+                                <div class="login-row row forrr no-margin">
+                                    <p style="font-weight: bold;color: #000000;"> <input type="checkbox"
+                                            style="accent-color: #b1040e;">
+                                        Remember Me</p>
+                                    <p style="font-weight: bold;color: #000000;"><a href=""
+                                            style="color: #b1040e;">Forget Password?</a>
+                                    </p>
+                                </div>
+                                <!-------------------------------------------Blob Button starts------------------------------------------------------------------->
+                                <div class="login-row btnroo justify-content-center no-margin">
+                                    <!-- Start: Blob Button -->
+                                    <div class="buttons">
+                                        <button class="blob-btn" style="width:250px !important;border-radius:10px;">
+                                            Sign in
+                                            <span class="blob-btn__inner">
+                                                <span class="blob-btn__blobs">
+                                                    <span class="blob-btn__blob"></span>
+                                                    <span class="blob-btn__blob"></span>
+                                                    <span class="blob-btn__blob"></span>
+                                                    <span class="blob-btn__blob"></span>
+                                                </span>
+                                            </span>
+                                        </button>
+                                        <br />
+                                    </div>
+                                    <!-- End: Blob Button -->
+                                </div>
+                                <!-------------------------------------------Blob Button ends------------------------------------------------------------------->
+                            </form>
+                            <!-------------------------------------------Login Page ends------------------------------------------------------------------->
+                            <div class="login-row donroo row no-margin">
+                                <p
+                                    style="color: #000000;margin: auto !important;font-size: 18px !important;font-weight: bold;">
+                                    Dont
+                                    have an Account ? <a href="{% url 'rsignup' %}"
+                                        style="color:#b1040e;text-decoration: none;">Sign
+                                        Up</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="{% static '/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static '/js/popper.min.js' %}"></script>
+<script src="{% static '/js/bootstrap.min.js' %}"></script>
+<script src="{% static '/plugins/scroll-fixed/jquery-scrolltofixed-min.js' %}"></script>
+<script src="{% static '/js/script.js' %}"></script>
+<script>
+    //loading effect
+    var reloading = sessionStorage.getItem("reloading");
+    if (reloading) {
+        // Remove the reloading flag from sessionStorage
+        sessionStorage.removeItem("reloading");
+
+        // Call your function to show the preloader
+        myFunction(); // Replace with your actual function name
+    }
+
+    function myFunction() {
+        // Show the preloader
+        document.querySelector('.preloader').style.display = 'flex';
+
+        // Simulate a delay (replace with actual loading logic)
+        setTimeout(function () {
+            // Hide the preloader after some time (example: 2 seconds)
+            document.querySelector('.preloader').style.display = 'none';
+        }, 2000); // Adjust the delay time as needed
+    }
+
+    // Set reloading flag in sessionStorage on page load
+    sessionStorage.setItem("reloading", "true");
+
+    function generateCaptcha() {
+        var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        var length = 6; // Length of CAPTCHA code
+        var captcha = "";
+        for (var i = 0; i < length; i++) {
+            var randomChar = Math.floor(Math.random() * chars.length);
+            captcha += chars.substring(randomChar, randomChar + 1);
+        }
+        return captcha;
+    }
+
+    // Function to reload CAPTCHA
+    function reloadCaptcha() {
+        var captchaInput = document.getElementById('captcha');
+        var captchaValue = generateCaptcha();
+        document.getElementById('captchaText').textContent = captchaValue; // Update text-based CAPTCHA
+        return captchaValue;
+    }
+    // Function to validate form on submission
+    function validateForm(event) {
+        event.preventDefault(); // Prevent form submission
+        var userInput = document.getElementById('captcha').value;
+        var storedCaptcha = document.getElementById('captchaText').textContent;
+
+        if (userInput.toLowerCase() === storedCaptcha.toLowerCase()) {
+            document.getElementById('stored_captcha').value = storedCaptcha; // Set hidden input value
+            // Show loading effect
+            $('.loading').show();
+
+            // Simulate network delay
+            setTimeout(function () {
+                document.getElementById('signupForm').submit(); // Submit the form if CAPTCHA validation passed
+            }, 2000);
+        } else {
+            alert('CAPTCHA verification failed. Please try again.');
+            reloadCaptcha(); // Reload CAPTCHA on failure
+            document.getElementById('captcha').value = ""; // Clear input field
+            return false; // Prevent form submission
+        }
+    }
+
+    // Initialize CAPTCHA on page load
+    window.onload = function () {
+        var captcha = generateCaptcha();
+        document.getElementById('captchaText').textContent = captcha; // Display initial CAPTCHA text
+        console.log('Generated CAPTCHA:', captcha);
+        var reloading = sessionStorage.getItem("reloading");
+        if (reloading) {
+            sessionStorage.removeItem("reloading");
+            myFunction();
+        }
+    };
+    //Disabling Right Click
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
+    // Disabling F12 key
+    document.addEventListener('keydown', function (e) {
+        // Check if F12 key is pressed
+        if (e.key === 'F12') {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    });
+    // Detect extensions that might interfere
+    setTimeout(function () {
+        if (typeof chrome !== 'undefined' && chrome.extension && chrome.extension.getViews) {
+            var views = chrome.extension.getViews({ type: 'popup' });
+            if (views.length > 0) {
+                // Extension detected, handle as needed
+            }
+        }
+    }, 100);
+
+</script>
+
+</html>

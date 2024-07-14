@@ -10,11 +10,10 @@ class patientSignUp(models.Model):
         ('female', 'Female'),
     ]
     gender=models.CharField(max_length=6,choices=GENDER_CHOICES)
-    email=models.CharField(max_length=100)
+    email=models.EmailField()
     mobile=models.CharField(max_length=10)
     address=models.CharField(max_length=200)
     password=models.CharField(max_length=16)
-    reenterpassword=models.CharField(max_length=16)
 
 #------------Doctor Model----------------------------
 class doctorSignUp(models.Model):
@@ -26,7 +25,20 @@ class doctorSignUp(models.Model):
         ('female', 'Female'),
     ]
     gender=models.CharField(max_length=6,choices=GENDER_CHOICES)
-    email=models.CharField(max_length=100)
+    email=models.EmailField()
     mobile=models.CharField(max_length=10)
     password=models.CharField(max_length=16)
-    reenterpassword=models.CharField(max_length=16)
+
+#------------Receptionist Model----------------------------
+class receptionistSignUp(models.Model):
+    name=models.CharField(max_length=200)
+    hname=models.CharField(max_length=200)
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ]
+    gender=models.CharField(max_length=6,choices=GENDER_CHOICES)
+    email=models.EmailField(max_length=100)
+    mobile=models.CharField(max_length=10)
+    address=models.CharField(max_length=200)
+    password=models.CharField(max_length=16)
