@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import patientSignUp,doctorSignUp,receptionistSignUp,labtechnicianSignUp,adminSignUp
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 import random
@@ -422,8 +423,7 @@ def psignup(request):
                 try:
                     msg.send()
                     messages.success(request, 'Registration successful. Confirmation email sent.')
-                    source='psignup'
-                    return redirect('success',{'source': source}) 
+                    return redirect('psuccess')
                 except Exception as e:
                     messages.error(request, f'Failed to send email: {str(e)}')
                     return redirect('psignup')  
@@ -850,8 +850,7 @@ def dsignup(request):
                 try:
                     msg.send()
                     messages.success(request, 'Registration successful. Confirmation email sent.')
-                    source='dsignup'
-                    return redirect('success',{'source': source}) 
+                    return redirect('dsuccess') 
                 except Exception as e:
                     messages.error(request, f'Failed to send email: {str(e)}')
                     return redirect('dsignup')  
@@ -1278,8 +1277,7 @@ def rsignup(request):
                 try:
                     msg.send()
                     messages.success(request, 'Registration successful. Confirmation email sent.')
-                    source='rsignup'
-                    return redirect('success',{'source': source}) 
+                    return redirect('rsuccess') 
                 except Exception as e:
                     messages.error(request, f'Failed to send email: {str(e)}')
                     return redirect('rsignup')  
@@ -1706,8 +1704,7 @@ def lsignup(request):
                 try:
                     msg.send()
                     messages.success(request, 'Registration successful. Confirmation email sent.')
-                    source='lsignup'
-                    return redirect('success',{'source': source}) 
+                    return redirect('lsuccess') 
                 except Exception as e:
                     messages.error(request, f'Failed to send email: {str(e)}')
                     return redirect('lsignup')  
@@ -1717,7 +1714,7 @@ def lsignup(request):
   else:
     return render(request,'lab_technician/lab_technician_signup.html')
 
-#--------------------------------Doctor Signup View-----------------------------------------
+#--------------------------------Admin Signup View-----------------------------------------
 def asignup(request):
   if request.method == 'POST':
         name = request.POST.get('name')
@@ -2133,8 +2130,7 @@ def asignup(request):
                 try:
                     msg.send()
                     messages.success(request, 'Registration successful. Confirmation email sent.')
-                    source='asignup'
-                    return redirect('success',{'source': source}) 
+                    return redirect('asuccess')
                 except Exception as e:
                     messages.error(request, f'Failed to send email: {str(e)}')
                     return redirect('asignup')  
@@ -2158,7 +2154,7 @@ def plogin(request):
             if patient.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('pdashboard')  # Replace 'pdashboard' with your actual dashboard URL name
+                return redirect('pdashboard',name=patient.name)
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2181,7 +2177,7 @@ def dlogin(request):
             if doctor.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('ddashboard')  # Replace 'pdashboard' with your actual dashboard URL name
+                return redirect('ddashboard')  # Replace 'ddashboard' with your actual dashboard URL name
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2262,22 +2258,39 @@ def alogin(request):
     return render(request, 'admin/admin_login.html')
 
 
-#-------------Success Page View----------------------------------------------
-def success(request, source):
+#-------------Patient Success Page View----------------------------------------------
+def psuccess(request):
     if request.method == 'POST':
-        if source == 'psignup':
-            return redirect('plogin')
-        elif source == 'dsignup':
-            return redirect('dlogin')
-        elif source == 'rsignup':
-            return redirect('rlogin')
-        elif source == 'lsignup':
-            return redirect('llogin')
-    return render(request, 'success.html')
+      return redirect('plogin')
+    return render(request, 'success/psuccess.html')
+
+#-------------Doctor Success Page View----------------------------------------------
+def dsuccess(request):
+    if request.method == 'POST':
+      return redirect('dlogin')
+    return render(request, 'success/dsuccess.html')
+
+#-------------Receptionist Success Page View----------------------------------------------
+def rsuccess(request):
+    if request.method == 'POST':
+      return redirect('rlogin')
+    return render(request, 'success/rsuccess.html')
+
+#-------------Lab Technician Success Page View----------------------------------------------
+def lsuccess(request):
+    if request.method == 'POST':
+      return redirect('llogin')
+    return render(request, 'success/lsuccess.html')
+
+#-------------Admin Success Page View----------------------------------------------
+def asuccess(request):
+    if request.method == 'POST':
+      return redirect('alogin')
+    return render(request, 'success/asuccess.html')
 
 #-------------Patient Dashboard Page View----------------------------------------------
-def pdashboard(request):
-    return render(request, 'patient/patient_dashboard.html')
+def pdashboard(request,name):
+    return render(request, 'patient/patient_dashboard.html',{'patient_name':name})
 
 #-------------Doctor Dashboard Page View----------------------------------------------
 def ddashboard(request):
