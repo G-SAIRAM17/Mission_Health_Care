@@ -398,7 +398,7 @@
       of your account.Start exploring and enjoy your experience with us!</p>
   </div><br>
   <!-------------------------------------------Login button starts---------------------------------------------------------------->
-  <form action="{% url 'success' '{{source}}' %}" method="POST">
+  <form action="{% url 'psuccess' %}" method="POST">
     {% csrf_token %}
     <div class="buttons" style="margin-right: 180px!important;">
       <button class="blob-btn" style="width:250px !important;border-radius:10px;" onclick="myFunction()">

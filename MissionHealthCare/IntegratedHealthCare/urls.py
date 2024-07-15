@@ -15,12 +15,16 @@ urlpatterns=[
     path('llogin/',views.llogin,name='llogin'),
     path('alogin/',views.alogin,name='alogin'),
     #-----------dashboard urls----------------------------
-    path('pdashboard/',views.pdashboard,name='pdashboard'),
+    path('pdashboard/<str:name>/',views.pdashboard,name='pdashboard'),
     path('dbashboard/',views.ddashboard,name='ddashboard'),
     path('rdashboard/',views.rdashboard,name='rdashboard'),
     path('ldashboard/',views.ldashboard,name='ldashboard'),
     path('adashboard/',views.adashboard,name='adashboard'),
     #-----------Success urls----------------------------
-    path('success/<str:source>/',views.success,name='success'),
+    path('psuccess/',views.psuccess,name='psuccess'),
+    path('dsuccess/',views.dsuccess,name='dsuccess'),
+    path('rsuccess/',views.rsuccess,name='rsuccess'),
+    path('lsuccess/',views.lsuccess,name='lsuccess'),
+    path('asuccess/',views.asuccess,name='asuccess'),
     
 ]
