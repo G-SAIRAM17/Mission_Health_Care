@@ -42,3 +42,26 @@ class receptionistSignUp(models.Model):
     mobile=models.CharField(max_length=10)
     address=models.CharField(max_length=200)
     password=models.CharField(max_length=16)
+
+#-------------Lab Technician Model---------------------
+class labtechnicianSignUp(models.Model):
+    name=models.CharField(max_length=200)
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ]
+    gender=models.CharField(max_length=6,choices=GENDER_CHOICES)
+    email=models.EmailField()
+    mobile=models.CharField(max_length=10)
+    lname=models.CharField(max_length=200)
+    laddress=models.CharField(max_length=200)
+    password=models.CharField(max_length=16)
+
+#------------Admin Model----------------------------
+class adminSignUp(models.Model):
+    name=models.CharField(max_length=200)
+    designation=models.CharField(max_length=100)
+    hname=models.CharField(max_length=200)
+    email=models.EmailField()
+    mobile=models.CharField(max_length=10)
+    password=models.CharField(max_length=16)
