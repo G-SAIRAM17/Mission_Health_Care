@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib import messages
-from .models import patientSignUp,doctorSignUp,receptionistSignUp,labtechnicianSignUp,adminSignUp
+from .models import patientSignUp,doctorSignUp,receptionistSignUp,labtechnicianSignUp,adminSignUp,timeSlot
+from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 import random
 import string
+import datetime
 
 #-----------------------Patient Signup View-------------------------------------------------------------
 def psignup(request):
@@ -24,9 +27,8 @@ def psignup(request):
             if patientSignUp.objects.filter(name=name).exists():
                 messages.info(request, 'Username already exists')
                 return redirect('psignup')
-                return redirect('psignup')
             else:
-                patientSignUp.objects.create(name=name, age=age, gender=gender, email=email, mobile=mobile, address=address, password=password)
+                patientSignUp.objects.create(name=name, age=age, gender=gender, email=email, mobile=mobile, address=address, password=password,profile_pic=null)
 
                 # Send email (example)
                 subject = 'Welcome to Our Service'
@@ -2177,7 +2179,7 @@ def dlogin(request):
             if doctor.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('ddashboard')  # Replace 'ddashboard' with your actual dashboard URL name
+                return redirect('ddashboard',name=doctor.name)  # Replace 'ddashboard' with your actual dashboard URL name
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2290,11 +2292,132 @@ def asuccess(request):
 
 #-------------Patient Dashboard Page View----------------------------------------------
 def pdashboard(request,name):
-    return render(request, 'patient/patient_dashboard.html',{'patient_name':name})
+    patient=patientSignUp.objects.get(name=name)
+    return render(request, 'patient/patient_dashboard.html',{'patient_name':name,'patient_age':patient.age})
+
+#--------------Display Doctors ----------------------------------------------------------
+def pdoctor(request,name):
+    doctors = doctorSignUp.objects.all()
+    return render(request,'patient/pdoctor.html',{'patient_name':name,'doctors':doctors})
+
+#--------------Display Hospitals ----------------------------------------------------------
+def phospital(request,name):
+    hospitals = doctorSignUp.objects.all().distinct()
+    unique_hospitals = []
+    seen_hospitals = set()
+    
+    for hospital in hospitals:
+        if hospital.hname not in seen_hospitals:
+            seen_hospitals.add(hospital.hname)
+            unique_hospitals.append(hospital)
+    return render(request,'patient/phospital.html',{'patient_name':name,'hospitals':unique_hospitals})
+
+#--------------Display Selected Hospital Doctors ----------------------------------------------------------
+def doctors_list(request,name,hname):
+    doctor= doctorSignUp.objects.filter(hname=hname)
+    return render(request,'patient/selecteddoctors.html',{'patient_name':name,'hname':hname, 'doctors':doctor})
+
+#--------------Book Appointments ----------------------------------------------------------
+def book_appointment(request, doctor_id, name):
+    patient=patientSignUp.objects.get(name=name)
+    doctor = get_object_or_404(doctorSignUp, id=doctor_id)
+    time_slots = timeSlot.objects.filter(doctor=doctor).order_by('date', 'time')
+    
+    # Categorize time slots
+    categorized_slots = {
+        'morning': [],
+        'afternoon': [],
+        'evening': []
+    }
+
+    for slot in time_slots:
+        if slot.time < datetime.time(12, 0):
+            categorized_slots['morning'].append(slot)
+        elif slot.time < datetime.time(18, 0):
+            categorized_slots['afternoon'].append(slot)
+        else:
+            categorized_slots['evening'].append(slot)
+
+    context = {
+        'patient_name':patient.name,
+        'doctor': doctor,
+        'categorized_slots': categorized_slots
+    }
+
+    return render(request, 'patient/book_appointment.html', context)
+
+#--------------Update patient Details-----------------------------------------------------------------
+def pupdate(request, name):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        mobile = request.POST.get('mobile')
+        address = request.POST.get('address')
+        profile_pic = request.FILES.get('profile_pic')
+
+        # Debug statements to print out the received form data
+        print(f"Email: {email}")
+        print(f"Mobile: {mobile}")
+        print(f"Address: {address}")
+        print(f"Profile Pic: {profile_pic}")
+
+        # Check for missing email
+        if not email:
+            messages.error(request, 'Email field is required.')
+            return redirect('pupdate', name=name)
+
+        try:
+            patient = patientSignUp.objects.get(name=name)
+            patient.email = email
+            patient.mobile = mobile
+            patient.address = address
+            if profile_pic:
+                patient.profile_pic = profile_pic
+            patient.save()
+            messages.success(request, 'Profile updated successfully.')
+            patient.save()
+            return redirect('pdashboard', name=name)
+        except patientSignUp.DoesNotExist:
+            messages.error(request, 'Patient does not exist.')
+            return redirect('pupdate', name=name)
+    else:
+        try:
+            patient = patientSignUp.objects.get(name=name)
+            return render(request, 'patient/pupdate.html', {'patient_name':patient.name,'patient': patient})
+        except patientSignUp.DoesNotExist:
+            messages.error(request, 'Patient does not exist.')
+            return redirect('pupdate', name=name)
+
 
 #-------------Doctor Dashboard Page View----------------------------------------------
-def ddashboard(request):
-    return render(request, 'doctor/doctor_dashboard.html')
+def ddashboard(request,name):
+    doctor=doctorSignUp.objects.get(name=name)
+    return render(request, 'doctor/doctor_dashboard.html',{'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+
+def dtimeslots(request,name):
+    doctor=doctorSignUp.objects.get(name=name)
+    if request.method == 'POST':
+      try:
+        date = request.POST['date']
+        time = request.POST['time']
+        max_appointments = request.POST['max_appointments']
+      except MultiValueDictKeyError:
+            return render(request, 'doctor/dtimeslots.html', {
+                'error': 'Please fill in all fields.',
+                'doctor_name': doctor.name,
+                'specialist': doctor.specialist,
+                'hname': doctor.hname
+            })
+
+      new_timeslot = timeSlot(
+            doctor=doctor,
+            date=date,
+            time=time,
+            max_appointments=max_appointments
+        )
+      new_timeslot.save()
+        
+      return render(request, 'doctor/dtimeslots.html', {'success': True,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+    return render(request, 'doctor/dtimeslots.html', {'success': False,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
 
 #-------------Receptionist Dashboard Page View----------------------------------------------
 def rdashboard(request):

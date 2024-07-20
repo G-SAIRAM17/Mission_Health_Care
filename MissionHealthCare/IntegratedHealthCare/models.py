@@ -10,10 +10,11 @@ class patientSignUp(models.Model):
         ('female', 'Female'),
     ]
     gender=models.CharField(max_length=6,choices=GENDER_CHOICES)
-    email=models.EmailField()
+    email=models.EmailField(blank=True, null=True)
     mobile=models.CharField(max_length=10)
     address=models.CharField(max_length=200)
     password=models.CharField(max_length=16)
+    profile_pic = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
 
 #------------Doctor Model----------------------------
 class doctorSignUp(models.Model):
@@ -65,3 +66,10 @@ class adminSignUp(models.Model):
     email=models.EmailField()
     mobile=models.CharField(max_length=10)
     password=models.CharField(max_length=16)
+
+#---------------Doctor Set Appointments-------------------
+class timeSlot(models.Model):
+    doctor = models.ForeignKey(doctorSignUp, on_delete=models.CASCADE)
+    date = models.DateField()
+    time = models.TimeField()
+    max_appointments = models.IntegerField()

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Patient Dashboard</title>
+    <title>Update Patient Details</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
         body {
@@ -47,188 +47,6 @@
             border: 3px solid #b1040e;
             background-color: #fff;
         }
-        .part {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .part-60 {
-            flex: 0 0 60%;
-            border-right: 3px solid #b1040e;
-        }
-        .half {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .part-40 {
-            flex: 0 0 40%;
-        }
-        .upper-part, .lower-part {
-            flex: 1;
-            padding-top: 20px;
-            box-sizing: border-box;
-            overflow: hidden; /* Prevent scrolling */
-        }
-        .upper-part {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .upper-part img {
-            max-width: 100%;
-            height: 150px;
-            margin-bottom: 5px;
-        }
-        .lower-part {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: -100px;
-        }
-        /* Calendar CSS */
-        .calendar-container {
-            height: auto;
-            width: 400px;
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px 20px;
-        }
-
-        .calendar-week {
-            display: flex;
-            list-style: none;
-            align-items: center;
-            padding-inline-start: 0px;
-        }
-
-        .calendar-week-day {
-            max-width: 57.1px;
-            width: 100%;
-            text-align: center;
-            color: #000000;
-        }
-
-        .calendar-days {
-            margin-top: 30px;
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 20px;
-            padding-inline-start: 0px;
-        }
-
-        .calendar-day {
-            text-align: center;
-            color: #000000;
-            padding: 10px;
-        }
-
-        .calendar-month-arrow-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .calendar-month-year-container {
-            padding: 10px 10px 20px 10px;
-            color: #000000;
-            cursor: pointer;
-        }
-
-        .calendar-arrow-container {
-            margin-top: -5px;
-        }
-
-        .calendar-left-arrow,
-        .calendar-right-arrow {
-            height: 30px;
-            width: 30px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            color: #525659;
-        }
-
-        .calendar-today-button {
-            margin-top: -10px;
-            border-radius: 10px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #b1040e;
-            padding: 5px 10px;
-        }
-
-        .calendar-today-button {
-            height: 27px;
-            margin-right: 10px;
-            background-color: #b1040e;
-            color: white;
-        }
-
-        .calendar-months,
-        .calendar-years {
-            flex: 1;
-            border-radius: 10px;
-            height: 30px;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            color: #525659;
-            font-size: 15px;
-        }
-
-        .calendar-day-active {
-            background-color: #b1040e;
-            color: white;
-            border-radius: 50%;
-        }
-    /* Card CSS */
-    .card {
-            background: linear-gradient(135deg, #fff, #fff);
-            border-radius: 12px;
-            border: 2px solid #b1040e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-            height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px #b1040e;
-        }
-        .card h1 {
-            font-size: 1.5em;
-            font-weight: 700;
-            margin: 0;
-        }
-        .card p {
-            font-size: 1em;
-            color: #555;
-            margin: 10px 0;
-        }
-        .card1 {
-            background: linear-gradient(135deg, #fff, #fff);
-            border-radius: 12px;
-            border: 2px solid #b1040e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-right: -100px;
-            width: 700px;
-            text-align: center;
-            height: 300px;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .card1:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px #b1040e;
-        }
     /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
     *,
     *:before,
@@ -244,7 +62,7 @@
 
     .blob-btn {
       --numOfBlobs: 4;
-      --cyan: #b1040e;
+      --cyan: #36f506;
       --dark: #fff;
       --borderW: 2px;
       z-index: 1;
@@ -404,6 +222,14 @@
     }
 
     /*-------------------------------------------Loading Effect CSS ends-----------------------------------------------------*/
+    #profile_pic_preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover; /* Ensures the image covers the entire circular area */
+}
+
     </style>
 </head>
 <body>
@@ -422,135 +248,75 @@
         {% csrf_token %}
         <button type="submit">Hospitals</button>
     </form>
-    <form action="{% url 'pupdate' patient_name %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Update</button>
-  </form>
     <form action="{% url 'plogin' %}" method="post">
       {% csrf_token %}
       <button type="submit">Log out</button>
   </form>
     </div>
-    <!--------------------------------------Sidebar Starts------------------------------------------------------------------------>
+    <!--------------------------------------Sidebar ends------------------------------------------------------------------------>
     <div class="content-container" style="margin-bottom: 10px;margin-right: 10px;">
         <div class="header" style="border:3px solid #b1040e;border-bottom: none !important;">
                 <p style="color: #000000;margin-left: 20px;padding-top: 10px;font-size: 30px;font-weight: bold;font-family: 'Roboto', sans-serif;">Hello, {{patient_name}} ! </p>
         </div>
         <div class="content">
             <div class="content-split">
-              <div class="part-60">
-                <div class="half">
-                    <div class="card" style="margin: 30px;margin-left: -20px;">
-                        <div>
-                            <h1>Schedule a Consultation!</h1>
-                            <p style="color: #000000;margin-top: 20px !important;font-weight: bold;">Feeling Ill? Let Us Bring the Care to You! Book Your Appointment Today!</p>
-                        </div>
-                        <div class="buttons">
-                            <button class="blob-btn" style="width:250px !important;border-radius:10px;">
-                                Book an Appointment
-                                <span class="blob-btn__inner">
-                                    <span class="blob-btn__blobs">
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                    </span>
-                                </span>
-                            </button>
-                            <br />
-                        </div>
-                    </div>
-                    <div class="card" style="margin: 30px;margin-left: 30px;margin-right: -20px;">
-                        <div>
-                            <h1>Insightful Health Reports!</h1>
-                            <p style="color: #000000;font-weight: bold;margin-top: 20px !important;">Unlock your health story with just a click! View your reports now!</p>
-                        </div>
-                        <div class="buttons">
-                            <button class="blob-btn" style="width:250px !important;border-radius:10px;">
-                                See Medical History
-                                <span class="blob-btn__inner">
-                                    <span class="blob-btn__blobs">
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                    </span>
-                                </span>
-                            </button>
-                            <br />
-                        </div>
-                    </div>
-                </div>
-                <div class="half" style="width: 700px;">
-                    <div class="card1">
-                        <div>
-                            <h1>Welcome to Your Dashboard!</h1>
-                            <p style="color: #000000;margin-top: 20px !important;font-weight: bold;">View & Manage your upcoming appointments.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                
-    <!-------------------------------------------Cards ends------------------------------------------->
-            
-    <!-----------------------------------------Profile Pic of User starts----------------------------------->
-                <div class="part part-40">
-                    <div class="upper-part">
-                        <img style="border:5px solid #b1040e; border-radius: 50%;" src="{% if patient.profile_pic %}{{ patient.profile_pic.url }}{% else %}path/to/default/image.jpg{% endif %}" alt="Placeholder Image">
-                        <p style="color: #b1040e;font-size: 20px;font-weight: bold;">{{ patient_name }}</p>
-                        <p style="margin-top: -10px;color: #b1040e;font-size: 15px;font-weight: bold;">{{patient_age}} Years</p>
-                        <p style="align-items: left !important;font-size: 20px;margin-top: -5px;color:#000000;font-weight: bold;">Monthly Calendar</p>
-                    </div>
-    <!-----------------------------------------Profile Pic of User ends----------------------------------->
+                <p style="justify-content: center; color: #000000;margin-left: 20px;padding-top: 10px;font-size: 30px;font-weight: bold;font-family: 'Roboto', sans-serif;">Update Your Details</p>
+                <form method="POST" enctype="multipart/form-data" action="{% url 'pdashboard' patient_name %}">
+                    {% csrf_token %}
+                    <label for="profile_pic">Profile Picture:</label>
+                    <input type="file" id="profile_pic" name="profile_pic" accept="image/*" style="display: none;" onchange="previewImage(event)"><br>
+                    <img id="profile_pic_preview" src="{% if patient.profile_pic %}{{ patient.profile_pic.url }}{% endif %}" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%; cursor: pointer;"><br>
 
-    <!------------------------------------------------Calendar code starts-------------------------------------->
-                <div class="lower-part">
-                    <div class="calendar-container" style="margin-top: -30px;">
-                        <div class="calendar-month-arrow-container">
-                          <div class="calendar-month-year-container">
-                            <select class="calendar-years" style="color: #000000;font-size: 16px;font-weight: bold;"></select>
-                            <select class="calendar-months" style="color: #000000;font-size: 16px;font-weight: bold;">
-                            </select>
-                          </div>
-                          <div class="calendar-month-year">
-                          </div>
-                          <div class="calendar-arrow-container">
-                            <button class="calendar-today-button"></button>
-                            <button class="calendar-left-arrow" style="background-color: #b1040e;color:#fff;">
-                              ← </button>
-                            <button class="calendar-right-arrow" style="background-color: #b1040e;color:#fff;"> →</button>
-                          </div>
-                        </div>
-                        <ul class="calendar-week" style="font-weight: bold;">
-                        </ul>
-                        <ul class="calendar-days" style="font-weight: bold;">
-                        </ul>
-                      </div>
-                </div>
-    <!------------------------------------------------Calendar code ends-------------------------------------->
+                    <label for="name">Name:</label>
+                    <input type="name" id="name" name="name" value="{{ patient.name }}" readonly><br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ patient.email }}"><br>
+            
+                    <label for="mobile">Mobile Number:</label>
+                    <input type="text" id="mobile" name="mobile" value="{{ patient.mobile }}"><br>
+            
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" value="{{ patient.address }}"><br>
+            
+                <div class="buttons">
+                        <button class="blob-btn" style="width:250px !important;border-radius:10px;">
+                            Update
+                            <span class="blob-btn__inner">
+                                <span class="blob-btn__blobs">
+                                    <span class="blob-btn__blob"></span>
+                                    <span class="blob-btn__blob"></span>
+                                    <span class="blob-btn__blob"></span>
+                                    <span class="blob-btn__blob"></span>
+                                </span>
+                            </span>
+                        </button>
+                        <br />
+                    </div>
+                </form>
+            
             </div>
         </div>
     </div>
     <script>
-        const weekArray = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
-const monthArray = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-const current = new Date();
-const todaysDate = current.getDate();
-const currentYear = current.getFullYear();
-const currentMonth = current.getMonth();
+        function previewImage(event) {
+    const input = event.target;
+    const reader = new FileReader();
+
+    reader.onload = function() {
+        const preview = document.getElementById('profile_pic_preview');
+        preview.src = reader.result;
+    }
+
+    if (input.files && input.files[0]) {
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Trigger file input when the image is clicked
+document.getElementById('profile_pic_preview').addEventListener('click', function() {
+    document.getElementById('profile_pic').click();
+});
 
 var reloading = sessionStorage.getItem("reloading");
   if (reloading) {
@@ -581,142 +347,6 @@ window.onload = function () {
       sessionStorage.removeItem("reloading");
       myFunction();
     }
-  const currentDate = new Date();
-  generateCalendarDays(currentDate);
-
-  let calendarWeek = document.getElementsByClassName("calendar-week")[0];
-  let calendarTodayButton = document.getElementsByClassName(
-    "calendar-today-button"
-  )[0];
-  calendarTodayButton.textContent = `Today ${todaysDate}`;
-
-  calendarTodayButton.addEventListener("click", () => {
-    generateCalendarDays(currentDate);
-  });
-
-  weekArray.forEach((week) => {
-    let li = document.createElement("li");
-    li.textContent = week;
-    li.classList.add("calendar-week-day");
-    calendarWeek.appendChild(li);
-  });
-
-  const calendarMonths = document.getElementsByClassName("calendar-months")[0];
-  const calendarYears = document.getElementsByClassName("calendar-years")[0];
-  const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-
-  const selectedMonth = parseInt(monthYear.getAttribute("data-month") || 0);
-  const selectedYear = parseInt(monthYear.getAttribute("data-year") || 0);
-
-  monthArray.forEach((month, index) => {
-    let option = document.createElement("option");
-    option.textContent = month;
-    option.value = index;
-    option.selected = index === selectedMonth;
-    calendarMonths.appendChild(option);
-  });
-
-  const currentYear = new Date().getFullYear();
-  const startYear = currentYear - 60;
-  const endYear = currentYear + 60;
-  let newYear = startYear;
-  while (newYear <= endYear) {
-    let option = document.createElement("option");
-    option.textContent = newYear;
-    option.value = newYear;
-    option.selected = newYear === selectedYear;
-    calendarYears.appendChild(option);
-    newYear++;
-  }
-
-  const leftArrow = document.getElementsByClassName("calendar-left-arrow")[0];
-
-  leftArrow.addEventListener("click", () => {
-    const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-    const month = parseInt(monthYear.getAttribute("data-month") || 0);
-    const year = parseInt(monthYear.getAttribute("data-year") || 0);
-
-    let newMonth = month === 0 ? 11 : month - 1;
-    let newYear = month === 0 ? year - 1 : year;
-    let newDate = new Date(newYear, newMonth, 1);
-    generateCalendarDays(newDate);
-  });
-
-  const rightArrow = document.getElementsByClassName("calendar-right-arrow")[0];
-
-  rightArrow.addEventListener("click", () => {
-    const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-    const month = parseInt(monthYear.getAttribute("data-month") || 0);
-    const year = parseInt(monthYear.getAttribute("data-year") || 0);
-    let newMonth = month + 1;
-    newMonth = newMonth === 12 ? 0 : newMonth;
-    let newYear = newMonth === 0 ? year + 1 : year;
-    let newDate = new Date(newYear, newMonth, 1);
-    generateCalendarDays(newDate);
-  });
-
-  calendarMonths.addEventListener("change", function () {
-    let newDate = new Date(calendarYears.value, calendarMonths.value, 1);
-    generateCalendarDays(newDate);
-  });
-
-  calendarYears.addEventListener("change", function () {
-    let newDate = new Date(calendarYears.value, calendarMonths.value, 1);
-    generateCalendarDays(newDate);
-  });
-};
-
-function generateCalendarDays(currentDate) {
-  const newDate = new Date(currentDate);
-  const year = newDate.getFullYear();
-  const month = newDate.getMonth();
-  const totalDaysInMonth = getTotalDaysInAMonth(year, month);
-  const firstDayOfWeek = getFirstDayOfWeek(year, month);
-  let calendarDays = document.getElementsByClassName("calendar-days")[0];
-
-  removeAllChildren(calendarDays);
-
-  let firstDay = 1;
-  while (firstDay <= firstDayOfWeek) {
-    let li = document.createElement("li");
-    li.classList.add("calendar-day");
-    calendarDays.appendChild(li);
-    firstDay++;
-  }
-
-  let day = 1;
-  while (day <= totalDaysInMonth) {
-    let li = document.createElement("li");
-    li.textContent = day;
-    li.classList.add("calendar-day");
-    if (todaysDate === day && currentMonth === month && currentYear === year) {
-      li.classList.add("calendar-day-active");
-    }
-    calendarDays.appendChild(li);
-    day++;
-  }
-
-  const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-  monthYear.setAttribute("data-month", month);
-  monthYear.setAttribute("data-year", year);
-  const calendarMonths = document.getElementsByClassName("calendar-months")[0];
-  const calendarYears = document.getElementsByClassName("calendar-years")[0];
-  calendarMonths.value = month;
-  calendarYears.value = year;
-}
-
-function getTotalDaysInAMonth(year, month) {
-  return new Date(year, month + 1, 0).getDate();
-}
-
-function getFirstDayOfWeek(year, month) {
-  return new Date(year, month, 1).getDay();
-}
-
-function removeAllChildren(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
 }
     </script>
 </body>

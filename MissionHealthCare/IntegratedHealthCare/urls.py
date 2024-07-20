@@ -16,7 +16,7 @@ urlpatterns=[
     path('alogin/',views.alogin,name='alogin'),
     #-----------dashboard urls----------------------------
     path('pdashboard/<str:name>/',views.pdashboard,name='pdashboard'),
-    path('dbashboard/',views.ddashboard,name='ddashboard'),
+    path('dbashboard/<str:name>',views.ddashboard,name='ddashboard'),
     path('rdashboard/',views.rdashboard,name='rdashboard'),
     path('ldashboard/',views.ldashboard,name='ldashboard'),
     path('adashboard/',views.adashboard,name='adashboard'),
@@ -26,5 +26,13 @@ urlpatterns=[
     path('rsuccess/',views.rsuccess,name='rsuccess'),
     path('lsuccess/',views.lsuccess,name='lsuccess'),
     path('asuccess/',views.asuccess,name='asuccess'),
+    #---------------Inside Patient Dashboard urls-------------------------
+    path('pdoctor/<str:name>/',views.pdoctor,name='pdoctor'),
+    path('phospital/<str:name>/',views.phospital,name='phospital'),
+    path('doctors/<int:doctor_id>/book/<str:name>', views.book_appointment, name='book_appointment'),
+    path('doctors_list/<str:name>/<str:hname>/', views.doctors_list, name='doctors_list'),
+    path('pupdate/<str:name>/',views.pupdate,name='pupdate'),
+    #---------------Inside Doctor Dashboard urls-------------------------
+    path('dtimeslots/<str:name>/',views.dtimeslots,name='dtimeslots')
     
 ]
