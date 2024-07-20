@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Doctors of selected hospital</title>
+    <title>Book Appointment</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
         body {
@@ -40,13 +40,10 @@
             flex-direction: column;
         }
         .content-split {
-            display: flex;
             width: 100%;
             height: 100%;
             border: 3px solid #b1040e;
             background-color: #fff;
-        justify-content: space-between;
-        flex-wrap: wrap; 
         }
         
     /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
@@ -57,7 +54,8 @@
     }
 
     .buttons {
-      width: 60px;
+      width: 350px;
+      height: 80px;
       text-align: center;
       border-radius: 10px;
     }
@@ -70,8 +68,9 @@
       z-index: 1;
       position: relative;
       padding: 10px;
+      width: 350px;
+      height: 50px;
       text-align: center;
-      width: 70px;
       text-transform: uppercase;
       color: var(--dark);
       font-size: 16px;
@@ -226,11 +225,67 @@
     /*-------------------------------------------Loading Effect CSS ends-----------------------------------------------------*/
     .slot-date {
             color: #333;
-            margin-top: 30px;
+            margin-top: 12px;
+            margin-left: 30px;
             font-size: 1.2em;
             font-weight: bold;
         }
+    
+    /*-------------------------------------------- Dates CSS starts-------------------------------------------------------------*/
+    .carousel_crousalMainDiv__Bk_4B {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
 
+    .carousel_placeholder__F4aZX {
+        flex: 1;
+    }
+
+    .DatesDesktop_datesMonthWrap__E3NxK {
+        display: flex;
+        align-items: center;
+    }
+
+    .DatesDesktop_monthLabel__V6P5h {
+        font-size: 15px;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    .DatesDesktop_cinemaDates__jMukI {
+        text-decoration: none;
+        color: black;
+        margin-right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .DatesDesktop_cinemaDates__jMukI:hover .DatesDesktop_movieDateText__uP2Lk {
+        background-color: #f0f0f0;
+        border-radius: 5px;
+    }
+
+    .DatesDesktop_movieDateText__uP2Lk {
+        text-align: center;
+        padding: 5px;
+    }
+
+    .DatesDesktop_month__wrtZg {
+        font-size: 15px;
+    }
+
+    .DatesDesktop_date__bL7mg {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .DatesDesktop_active__URmA3 .DatesDesktop_movieDateText__uP2Lk {
+        background-color: #dcdcdc;
+        border-radius: 5px;
+    }
+/*--------------------------------------Dates CSS ends--------------------------------------------------------------------------------*/
     </style>
 </head>
 <body>
@@ -266,15 +321,38 @@
         <div class="content">
             <div class="content-split">
               <div>
-                <p style="color: #000000;margin-left: 400px; padding-top: 10px;font-size: 30px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">Book an Appointment with Dr. {{ doctor.name }}</p><br>
-              </div>
-              <div style="margin-top: 30px;">
+                <p style="color: #000000;margin-left: 500px; padding-top: 10px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">Dr. {{ doctor.name }}</p>
+                <p style="color: #000000;margin-left: 500px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">{{ doctor.specialist }}</p>
+                <p style="color: #000000;margin-left: 500px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">{{ doctor.hname }}</p>
+                <p style="border-top: 2px solid #b1040e;"></p>
+                <p style="color: #000000; padding-top: 5px; font-size: 20px;font-weight: bold;margin-left: 30px;">
+                    Today's Date: {{ today|date:"F d, Y" }}
+                </p>
+            </div>
+            <div>
                 <br>
-                  <h2 class="slot-date">Morning Slots</h2>
-                  <div class="buttons" style="margin-left: 100px;">
-                      {% for slot in categorized_slots.morning %}
-                      <button class="blob-btn" style="width:230px !important;border-radius:10px;">
-                        {{ slot.date }} - {{ slot.time }}
+                <div class="carousel_crousalMainDiv__Bk_4B">
+                    <div class="carousel_placeholder__F4aZX"></div>
+                    <div class="DatesDesktop_datesMonthWrap__E3NxK DatesDesktop_endDate__HQFDr">
+                        <div class="DatesDesktop_monthLabel__V6P5h" style="transform: rotate(270deg);margin-left: -500px !important;">JUL</div>
+                        {% for date in dates %}
+                            <a class="DatesDesktop_cinemaDates__jMukI {% if date.date == selected_date %}DatesDesktop_active__URmA3{% endif %}"
+                               href="?date={{ date.date|date:'F d, Y' }}">
+                                <div class="DatesDesktop_movieDateText__uP2Lk" style="align-items: left;">
+                                    <div class="DatesDesktop_month__wrtZg">{{ date.date|date:"D" }}</div>
+                                    <div class="DatesDesktop_date__bL7mg">{{ date.date|date:"d" }}</div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel_placeholder__F4aZX"></div>
+                </div>            
+                <!--<h2 class="slot-date">Available Slots on {{ selected_date|date:"F d, Y" }}</h2>-->
+                <h2 class="slot-date">Morning</h2>
+                <div class="buttons" style="margin-left: 100px;display: flex;">
+                    {% for slot in categorized_slots.morning %}
+                    <button class="blob-btn" style="border-radius:10px;margin-right: 10px;">
+                        {{ slot.time }}
                         <span class="blob-btn__inner">
                             <span class="blob-btn__blobs">
                                 <span class="blob-btn__blob"></span>
@@ -284,18 +362,15 @@
                             </span>
                         </span>
                     </button>
-                      {% empty %}
-                      <p class="no-slots">No morning slots available</p>
-                      {% endfor %}
-                  </div>
-              </div>
-      
-              <div>
-                  <h2 class="slot-date">Afternoon Slots</h2>
-                  <div class="buttons" style="margin-left: 100px;">
-                      {% for slot in categorized_slots.afternoon %}
-                      <button class="blob-btn" style="width:230px !important;border-radius:10px;">
-                        {{ slot.date }} - {{ slot.time }}
+                    {% empty %}
+                    <p class="no-slots">No morning slots available</p>
+                    {% endfor %}
+                </div>
+                <h2 class="slot-date">Afternoon</h2>
+                <div class="buttons" style="margin-left: 100px;display: flex;">
+                    {% for slot in categorized_slots.afternoon %}
+                    <button class="blob-btn" style="border-radius:10px;margin-right: 10px;">
+                        {{ slot.time }}
                         <span class="blob-btn__inner">
                             <span class="blob-btn__blobs">
                                 <span class="blob-btn__blob"></span>
@@ -305,18 +380,15 @@
                             </span>
                         </span>
                     </button>
-                      {% empty %}
-                      <p class="no-slots">No afternoon slots available</p>
-                      {% endfor %}
-                  </div>
-              </div>
-      
-              <div>
-                  <h2 class="slot-date">Evening Slots</h2>
-                  <div class="buttons" style="margin-left: 100px;">
-                      {% for slot in categorized_slots.evening %}
-                      <button class="blob-btn" style="width:230px !important;border-radius:10px;">
-                        {{ slot.date }} - {{ slot.time }}
+                    {% empty %}
+                    <p class="no-slots">No afternoon slots available</p>
+                    {% endfor %}
+                </div>
+                <h2 class="slot-date">Evening</h2>
+                <div class="buttons" style="margin-left: 100px;display: flex;">
+                    {% for slot in categorized_slots.evening %}
+                    <button class="blob-btn" style="border-radius:10px;margin-right: 10px;">
+                        {{ slot.time }}
                         <span class="blob-btn__inner">
                             <span class="blob-btn__blobs">
                                 <span class="blob-btn__blob"></span>
@@ -326,27 +398,11 @@
                             </span>
                         </span>
                     </button>
-                      {% empty %}
-                      <p class="no-slots">No evening slots available</p>
-                      {% endfor %}
-                  </div>
-              </div>
-                        <div class="buttons" style="margin-left: 100px;">
-                            <button class="blob-btn" style="width:230px !important;border-radius:10px;">
-                                Book an Appointment
-                                <span class="blob-btn__inner">
-                                    <span class="blob-btn__blobs">
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                    </span>
-                                </span>
-                            </button>
-                            <br />
-                        </div>
-                
-    <!-------------------------------------------Cards ends------------------------------------------->
+                    {% empty %}
+                    <p class="no-slots">No evening slots available</p>
+                    {% endfor %}
+                </div>
+            </div>
             </div>
         </div>
     </div>
@@ -382,6 +438,15 @@ window.onload = function () {
       myFunction();
     }
 }
+
+function showSlots(date) {
+        // Update the URL with the selected date
+        const url = new URL(window.location.href);
+        url.searchParams.set('date', date);
+        window.location.href = url;
+        return false;
+    }
+
     </script>
 </body>
 </html>

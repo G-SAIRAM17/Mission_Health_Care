@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib import messages
+from django.http import Http404
 from .models import patientSignUp,doctorSignUp,receptionistSignUp,labtechnicianSignUp,adminSignUp,timeSlot
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from datetime import datetime, time,timedelta
+from dateutil import parser
+from datetime import datetime
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.core.mail import EmailMultiAlternatives
@@ -2319,10 +2324,40 @@ def doctors_list(request,name,hname):
 
 #--------------Book Appointments ----------------------------------------------------------
 def book_appointment(request, doctor_id, name):
-    patient=patientSignUp.objects.get(name=name)
+# Retrieve patient and doctor objects
+    patient = get_object_or_404(patientSignUp, name=name)
     doctor = get_object_or_404(doctorSignUp, id=doctor_id)
+
+    # Get today's date
+    today = datetime.datetime.now().date()
+
+    # Get the date from the query parameters
+    date_param = request.GET.get('date', None)
+
+    if date_param:
+        try:
+            # Convert date parameter to a date object
+            date_object = parser.parse(date_param).date()
+        except ValueError:
+            raise ValidationError("Invalid date format. It must be in 'MMMM d, yyyy' format.")
+    else:
+        date_object = today
+
+    # Get all dates in the current month and filter for upcoming dates
+    first_day_of_month = today.replace(day=1)
+    last_day_of_month = (first_day_of_month + timedelta(days=31)).replace(day=1) - timedelta(days=1)
+    
+    dates = timeSlot.objects.filter(
+        doctor=doctor,
+        date__range=[today, last_day_of_month]
+    ).values('date').distinct().order_by('date')
+
+    # Filter time slots based on the selected date
     time_slots = timeSlot.objects.filter(doctor=doctor).order_by('date', 'time')
     
+    if date_object:
+        time_slots = time_slots.filter(date=date_object)
+
     # Categorize time slots
     categorized_slots = {
         'morning': [],
@@ -2331,17 +2366,21 @@ def book_appointment(request, doctor_id, name):
     }
 
     for slot in time_slots:
-        if slot.time < datetime.time(12, 0):
+        if slot.time < time(12, 0):
             categorized_slots['morning'].append(slot)
-        elif slot.time < datetime.time(18, 0):
+        elif slot.time < time(18, 0):
             categorized_slots['afternoon'].append(slot)
         else:
             categorized_slots['evening'].append(slot)
 
+    # Prepare context for rendering
     context = {
-        'patient_name':patient.name,
+        'patient_name': patient.name,
         'doctor': doctor,
-        'categorized_slots': categorized_slots
+        'categorized_slots': categorized_slots,
+        'selected_date': date_object,
+        'today': today,
+        'dates': dates
     }
 
     return render(request, 'patient/book_appointment.html', context)
