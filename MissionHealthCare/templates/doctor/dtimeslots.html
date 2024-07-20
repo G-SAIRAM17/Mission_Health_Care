@@ -92,43 +92,17 @@
             margin-top: -100px;
         }
     /* Card CSS */
-    .card {
-            background: linear-gradient(135deg, #fff, #fff);
-            border-radius: 12px;
-            border: 2px solid #b1040e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 30px;
-            padding: 20px;
-            width: 150px;
-            text-align: center;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px #b1040e;
-        }
-        .card h1 {
-            font-size: 1.5em;
-            font-weight: 700;
-            margin: 0;
-        }
-        .card p {
-            font-size: 1em;
-            color: #555;
-            margin: 10px 0;
-        }
         .card1 {
             background: linear-gradient(135deg, #fff, #fff);
             border-radius: 12px;
             border: 2px solid #b1040e;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 30px;
+            margin-top: 100px;
+            margin-left: 45px;
+            margin-right: 10px;
             width: 700px;
             text-align: center;
-            height: 200px;
+            height: 500px;
             flex-direction: column;
             justify-content: center;
         }
@@ -311,6 +285,181 @@
     }
 
     /*-------------------------------------------Loading Effect CSS ends-----------------------------------------------------*/
+
+    /*------------------------------------------Modal CSS starts--------------------------------------------------------------*/
+    .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+/*---------------------Modal css ends------------------------------------------------------------------*/
+
+      /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
+      *,
+    *:before,
+    *:after {
+      box-sizing: border-box;
+    }
+
+    .buttons {
+      width: 70px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    .blob-btn {
+      --numOfBlobs: 4;
+      --cyan: #b1040e;
+      --dark: #fff;
+      --borderW: 2px;
+      z-index: 1;
+      position: relative;
+      padding: 10px;
+      text-align: center;
+      width: 70px;
+      text-transform: uppercase;
+      color: var(--dark);
+      font-size: 16px;
+      font-weight: bold;
+      background-color: var(--cyan);
+      outline: none;
+      border: none;
+      transition: color 0.5s, background-color 0.5s;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .blob-btn:before {
+      content: "";
+      z-index: 1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border: var(--borderW) solid var(--cyan);
+      border-radius: 10px;
+    }
+
+    .blob-btn:after {
+      content: "";
+      z-index: -2;
+      position: absolute;
+      left: calc(var(--borderW) * 1.5);
+      top: calc(var(--borderW) * 1.5);
+      width: 100%;
+      height: 100%;
+      transition: all 0.3s 0.2s;
+      border-radius: 10px;
+    }
+
+    .blob-btn:hover {
+      color: var(--cyan);
+      background-color: var(--dark);
+      border-radius: 10px;
+    }
+
+    .blob-btn:hover:after {
+      transition: all 0.3s;
+      left: 0;
+      top: 0;
+      border-radius: 10px;
+    }
+
+    .blob-btn__inner {
+      z-index: -1;
+      overflow: hidden;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      background: var(--cyan);
+      transition: background 0.5s;
+    }
+
+    .blob-btn__blobs {
+      position: relative;
+      display: block;
+      height: 100%;
+      filter: url('#goo');
+    }
+
+    .blob-btn__blob {
+      position: absolute;
+      top: var(--borderW);
+      width: calc(100% / var(--numOfBlobs));
+      height: 100%;
+      background: var(--dark);
+      border-radius: 100%;
+      transform: translate3d(0, 150%, 0) scale(1.7);
+      transition: transform 0.45s;
+    }
+
+    @supports (filter: url('#goo')) {
+      .blob-btn__blob {
+        transform: translate3d(0, 150%, 0) scale(1.4);
+      }
+    }
+
+    .blob-btn__blob:nth-child(1) {
+      left: 0;
+      transition-delay: 0s;
+    }
+
+    .blob-btn__blob:nth-child(2) {
+      left: 25%;
+      transition-delay: 0.08s;
+    }
+
+    .blob-btn__blob:nth-child(3) {
+      left: 50%;
+      transition-delay: 0.16s;
+    }
+
+    .blob-btn__blob:nth-child(4) {
+      left: 75%;
+      transition-delay: 0.24s;
+    }
+
+    .blob-btn:hover .blob-btn__blob {
+      transform: translateZ(0) scale(1.7);
+    }
+
+    @supports (filter: url('#goo')) {
+      .blob-btn:hover .blob-btn__blob {
+        transform: translateZ(0) scale(1.4);
+      }
+    }
+
+    /*-------------------------------------------Blob button CSS ends-----------------------------------------------------*/
     </style>
 </head>
 <body>
@@ -321,11 +470,11 @@
     <!--------------------------------------Sidebar Starts------------------------------------------------------------------------>
     <div class="sidebar" style="border:3px solid #b1040e;border-right: none !important;margin-top: 10px;margin-left: 10px;margin-bottom: 10px;">
         <img style="border-radius: 50%; width:100px;height:50px;border: 2px solid #b1040e; margin: 10px;margin-left: 30px;" src="data:image/jpeg;base64,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"/>
-        <form action="{% url 'dtimeslots' doctor_name %}" method="post">
-          {% csrf_token %}
-          <button type="submit">Appointments</button>
-      </form>
-        <form action="{% url 'dlogin' %}" method="post">
+        <form action="{% url 'ddashboard' doctor_name %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Dashboard</button>
+        </form>
+    <form action="{% url 'dlogin' %}" method="post">
       {% csrf_token %}
       <button type="submit">Log out</button>
   </form>
@@ -338,35 +487,43 @@
         <div class="content">
             <div class="content-split">
               <div class="part-60">
-                <div class="half">
-                    <div class="card">
                         <div>
-                            <p style="color: #000000;margin-top: 20px !important;font-weight: bold;">Total Appointments</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div>
-                            <p style="color: #000000;font-weight: bold;margin-top: 20px !important;">Pending</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                      <div>
-                          <p style="color: #000000;font-weight: bold;margin-top: 20px !important;">Completed</p>
+                            <h1 style="margin-top:50px; margin-left: 200px;">Create Appointments !</h1><br><br>
+                            <form id="timeslot-form" method="POST" action="{% url 'dtimeslots' doctor_name %}">
+                              {% csrf_token %}
+                              <label for="date" style="font-weight: bold;color: #000000;margin-left: 200px;">Date:</label>
+                              <input type="date" name="date" style="height: 30px; width: 200px; margin-top: 0px;color: #b1040e;font-weight: bold;" required><br><br>
+                              
+                              <label for="time" style="font-weight: bold;color: #000000;margin-left: 200px;">Time:</label>
+                              <input type="time" name="time" style="height: 30px; width: 200px; margin-top: 0px;color: #b1040e;font-weight: bold;" required><br><br>
+                              
+                              <label for="max_appointments" style="font-weight: bold;color: #000000;margin-left: 200px;">Max Appointments:</label>
+                              <input type="number" name="max_appointments" min="1" style="height: 50px; width: 50px; margin-top: 0px;color: #b1040e;font-weight: bold;" required><br><br>
+                              
+                              <div class="buttons">
+                                <button class="blob-btn" style="width:250px !important;border-radius:10px;margin-left: 250px !important;">
+                                  Create Time Slot
+                                  <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                      <span class="blob-btn__blob"></span>
+                                      <span class="blob-btn__blob"></span>
+                                      <span class="blob-btn__blob"></span>
+                                      <span class="blob-btn__blob"></span>
+                                    </span>
+                                  </span>
+                                </button>
+                                <br />
+                              </div>
+                          </form>
+                      
+                          <!-- The Modal -->
+                          <div id="successModal" class="modal">
+                              <div class="modal-content">
+                                  <span class="close">&times;</span>
+                                  <p>Time slot created successfully!</p>
+                              </div>
+                          </div>                      
                       </div>
-                  </div>
-                </div>
-                <div class="half1" style="width: 700px;">
-                    <div class="card1">
-                        <div>
-                            <h1>Today's Appointments !</h1>
-                        </div>
-                    </div>
-                    <div class="card1">
-                      <div>
-                          <h1>Patient Details!</h1>
-                      </div>
-                  </div>
-                </div>
             </div>
                 
     <!-------------------------------------------Cards ends------------------------------------------->
@@ -417,6 +574,33 @@ window.onload = function () {
       myFunction();
     }
 }
+
+// Function to display modal
+function showModal() {
+            var modal = document.getElementById("successModal");
+            var span = document.getElementsByClassName("close")[0];
+
+            modal.style.display = "block";
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+        // Show modal if the form was successfully submitted
+        document.addEventListener("DOMContentLoaded", function() {
+            if (document.getElementById("success-flag").value === "true") {
+                showModal();
+            }
+        });
     </script>
+        <!-- Hidden input to check success flag -->
+        <input type="hidden" id="success-flag" value="{{ success|yesno:'true,false' }}">
 </body>
 </html>

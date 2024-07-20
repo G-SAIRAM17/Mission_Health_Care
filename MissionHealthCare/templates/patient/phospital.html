@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Patient Dashboard</title>
+    <title>Hospital Details</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
     <style>
         body {
@@ -10,7 +10,6 @@
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
-            overflow: hidden;
         }
         .sidebar {
             width: 200px;
@@ -46,158 +45,19 @@
             height: 100%;
             border: 3px solid #b1040e;
             background-color: #fff;
+        justify-content: space-between;
+        flex-wrap: wrap; 
         }
-        .part {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .part-60 {
-            flex: 0 0 60%;
-            border-right: 3px solid #b1040e;
-        }
-        .half {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .part-40 {
-            flex: 0 0 40%;
-        }
-        .upper-part, .lower-part {
-            flex: 1;
-            padding-top: 20px;
-            box-sizing: border-box;
-            overflow: hidden; /* Prevent scrolling */
-        }
-        .upper-part {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .upper-part img {
-            max-width: 100%;
-            height: 150px;
-            margin-bottom: 5px;
-        }
-        .lower-part {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: -100px;
-        }
-        /* Calendar CSS */
-        .calendar-container {
-            height: auto;
-            width: 400px;
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px 20px;
-        }
-
-        .calendar-week {
-            display: flex;
-            list-style: none;
-            align-items: center;
-            padding-inline-start: 0px;
-        }
-
-        .calendar-week-day {
-            max-width: 57.1px;
-            width: 100%;
-            text-align: center;
-            color: #000000;
-        }
-
-        .calendar-days {
-            margin-top: 30px;
-            list-style: none;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 20px;
-            padding-inline-start: 0px;
-        }
-
-        .calendar-day {
-            text-align: center;
-            color: #000000;
-            padding: 10px;
-        }
-
-        .calendar-month-arrow-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .calendar-month-year-container {
-            padding: 10px 10px 20px 10px;
-            color: #000000;
-            cursor: pointer;
-        }
-
-        .calendar-arrow-container {
-            margin-top: -5px;
-        }
-
-        .calendar-left-arrow,
-        .calendar-right-arrow {
-            height: 30px;
-            width: 30px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            color: #525659;
-        }
-
-        .calendar-today-button {
-            margin-top: -10px;
-            border-radius: 10px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #b1040e;
-            padding: 5px 10px;
-        }
-
-        .calendar-today-button {
-            height: 27px;
-            margin-right: 10px;
-            background-color: #b1040e;
-            color: white;
-        }
-
-        .calendar-months,
-        .calendar-years {
-            flex: 1;
-            border-radius: 10px;
-            height: 30px;
-            border: none;
-            cursor: pointer;
-            outline: none;
-            color: #525659;
-            font-size: 15px;
-        }
-
-        .calendar-day-active {
-            background-color: #b1040e;
-            color: white;
-            border-radius: 50%;
-        }
+        
     /* Card CSS */
     .card {
-            background: linear-gradient(135deg, #fff, #fff);
-            border-radius: 12px;
-            border: 2px solid #b1040e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-            height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        margin: 20px;
+        margin-bottom: 0; /* Add margin-bottom property */
+        padding: 20px;
+        border: 2px solid #b1040e;
+        border-radius: 10px;
+        width: calc(50% - 50px); /* Adjust width for two columns */
+        box-sizing: border-box;
         }
         .card:hover {
             transform: translateY(-10px);
@@ -213,22 +73,18 @@
             color: #555;
             margin: 10px 0;
         }
-        .card1 {
-            background: linear-gradient(135deg, #fff, #fff);
-            border-radius: 12px;
-            border: 2px solid #b1040e;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-right: -100px;
-            width: 700px;
-            text-align: center;
-            height: 300px;
+        .card img{
+            width: 100px !important;
+            height: 100px !important;
+            margin-right: 70px;
+        }
+        .text-content {
+            display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            margin-right: 20px;
         }
-        .card1:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 16px #b1040e;
-        }
+
     /*-------------------------------------------Blob button CSS starts-----------------------------------------------------*/
     *,
     *:before,
@@ -237,7 +93,7 @@
     }
 
     .buttons {
-      width: 70px;
+      width: 60px;
       text-align: center;
       border-radius: 10px;
     }
@@ -414,22 +270,18 @@
     <!--------------------------------------Sidebar Starts------------------------------------------------------------------------>
     <div class="sidebar" style="border:3px solid #b1040e;border-right: none !important;margin-top: 10px;margin-left: 10px;margin-bottom: 10px;">
         <img style="border-radius: 50%; width:100px;height:50px;border: 2px solid #b1040e; margin: 10px;margin-left: 30px;" src="data:image/jpeg;base64,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"/>
-        <form action="{% url 'pdoctor' patient_name %}" method="post">
+        <form action="{% url 'pdashboard' patient_name %}" method="post">
           {% csrf_token %}
-          <button type="submit">Doctor</button>
+          <button type="submit">Dashboard</button>
       </form>
-      <form action="{% url 'phospital' patient_name %}" method="post">
+      <form action="{% url 'pdoctor' patient_name %}" method="post">
         {% csrf_token %}
-        <button type="submit">Hospitals</button>
+        <button type="submit">Doctors</button>
     </form>
-    <form action="{% url 'pupdate' patient_name %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Update</button>
-  </form>
     <form action="{% url 'plogin' %}" method="post">
-      {% csrf_token %}
-      <button type="submit">Log out</button>
-  </form>
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+    </form>
     </div>
     <!--------------------------------------Sidebar Starts------------------------------------------------------------------------>
     <div class="content-container" style="margin-bottom: 10px;margin-right: 10px;">
@@ -438,16 +290,21 @@
         </div>
         <div class="content">
             <div class="content-split">
-              <div class="part-60">
-                <div class="half">
-                    <div class="card" style="margin: 30px;margin-left: -20px;">
-                        <div>
-                            <h1>Schedule a Consultation!</h1>
-                            <p style="color: #000000;margin-top: 20px !important;font-weight: bold;">Feeling Ill? Let Us Bring the Care to You! Book Your Appointment Today!</p>
+              <div>
+                <p style="color: #000000;margin-left: 500px; padding-top: 10px;font-size: 30px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">List of Hospitals</p><br>
+              </div>
+                    {% for i in hospitals %}
+                    <div class="card" style="margin: 20px;">
+                        <div style="display: flex;align-items: center;justify-content: space-between;">
+                        <div class="text-content">
+                            <p><span style="color: #000000;font-weight: bold;justify-content: left;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-size: 25px;">{{i.hname}}</span></p>
                         </div>
-                        <div class="buttons">
-                            <button class="blob-btn" style="width:250px !important;border-radius:10px;">
-                                Book an Appointment
+                        <img style="height:100px; border:5px solid #b1040e; border-radius: 50%;align-items: right;" src="https://imgv3.fotor.com/images/slider-image/A-clear-close-up-photo-of-a-woman.jpg" alt="Placeholder Image">
+                    </div>
+                        <div class="buttons" style="margin-left: 100px;">
+                            <form action="{% url 'doctors_list' patient_name i.hname %}">
+                            <button class="blob-btn" style="width:230px !important;border-radius:10px;">
+                                See Doctors
                                 <span class="blob-btn__inner">
                                     <span class="blob-btn__blobs">
                                         <span class="blob-btn__blob"></span>
@@ -457,100 +314,17 @@
                                     </span>
                                 </span>
                             </button>
+                        </form>
                             <br />
                         </div>
                     </div>
-                    <div class="card" style="margin: 30px;margin-left: 30px;margin-right: -20px;">
-                        <div>
-                            <h1>Insightful Health Reports!</h1>
-                            <p style="color: #000000;font-weight: bold;margin-top: 20px !important;">Unlock your health story with just a click! View your reports now!</p>
-                        </div>
-                        <div class="buttons">
-                            <button class="blob-btn" style="width:250px !important;border-radius:10px;">
-                                See Medical History
-                                <span class="blob-btn__inner">
-                                    <span class="blob-btn__blobs">
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                        <span class="blob-btn__blob"></span>
-                                    </span>
-                                </span>
-                            </button>
-                            <br />
-                        </div>
-                    </div>
-                </div>
-                <div class="half" style="width: 700px;">
-                    <div class="card1">
-                        <div>
-                            <h1>Welcome to Your Dashboard!</h1>
-                            <p style="color: #000000;margin-top: 20px !important;font-weight: bold;">View & Manage your upcoming appointments.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    {% endfor %}
                 
     <!-------------------------------------------Cards ends------------------------------------------->
-            
-    <!-----------------------------------------Profile Pic of User starts----------------------------------->
-                <div class="part part-40">
-                    <div class="upper-part">
-                        <img style="border:5px solid #b1040e; border-radius: 50%;" src="{% if patient.profile_pic %}{{ patient.profile_pic.url }}{% else %}path/to/default/image.jpg{% endif %}" alt="Placeholder Image">
-                        <p style="color: #b1040e;font-size: 20px;font-weight: bold;">{{ patient_name }}</p>
-                        <p style="margin-top: -10px;color: #b1040e;font-size: 15px;font-weight: bold;">{{patient_age}} Years</p>
-                        <p style="align-items: left !important;font-size: 20px;margin-top: -5px;color:#000000;font-weight: bold;">Monthly Calendar</p>
-                    </div>
-    <!-----------------------------------------Profile Pic of User ends----------------------------------->
-
-    <!------------------------------------------------Calendar code starts-------------------------------------->
-                <div class="lower-part">
-                    <div class="calendar-container" style="margin-top: -30px;">
-                        <div class="calendar-month-arrow-container">
-                          <div class="calendar-month-year-container">
-                            <select class="calendar-years" style="color: #000000;font-size: 16px;font-weight: bold;"></select>
-                            <select class="calendar-months" style="color: #000000;font-size: 16px;font-weight: bold;">
-                            </select>
-                          </div>
-                          <div class="calendar-month-year">
-                          </div>
-                          <div class="calendar-arrow-container">
-                            <button class="calendar-today-button"></button>
-                            <button class="calendar-left-arrow" style="background-color: #b1040e;color:#fff;">
-                              ← </button>
-                            <button class="calendar-right-arrow" style="background-color: #b1040e;color:#fff;"> →</button>
-                          </div>
-                        </div>
-                        <ul class="calendar-week" style="font-weight: bold;">
-                        </ul>
-                        <ul class="calendar-days" style="font-weight: bold;">
-                        </ul>
-                      </div>
-                </div>
-    <!------------------------------------------------Calendar code ends-------------------------------------->
             </div>
         </div>
     </div>
     <script>
-        const weekArray = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
-const monthArray = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
-const current = new Date();
-const todaysDate = current.getDate();
-const currentYear = current.getFullYear();
-const currentMonth = current.getMonth();
 
 var reloading = sessionStorage.getItem("reloading");
   if (reloading) {
@@ -581,142 +355,6 @@ window.onload = function () {
       sessionStorage.removeItem("reloading");
       myFunction();
     }
-  const currentDate = new Date();
-  generateCalendarDays(currentDate);
-
-  let calendarWeek = document.getElementsByClassName("calendar-week")[0];
-  let calendarTodayButton = document.getElementsByClassName(
-    "calendar-today-button"
-  )[0];
-  calendarTodayButton.textContent = `Today ${todaysDate}`;
-
-  calendarTodayButton.addEventListener("click", () => {
-    generateCalendarDays(currentDate);
-  });
-
-  weekArray.forEach((week) => {
-    let li = document.createElement("li");
-    li.textContent = week;
-    li.classList.add("calendar-week-day");
-    calendarWeek.appendChild(li);
-  });
-
-  const calendarMonths = document.getElementsByClassName("calendar-months")[0];
-  const calendarYears = document.getElementsByClassName("calendar-years")[0];
-  const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-
-  const selectedMonth = parseInt(monthYear.getAttribute("data-month") || 0);
-  const selectedYear = parseInt(monthYear.getAttribute("data-year") || 0);
-
-  monthArray.forEach((month, index) => {
-    let option = document.createElement("option");
-    option.textContent = month;
-    option.value = index;
-    option.selected = index === selectedMonth;
-    calendarMonths.appendChild(option);
-  });
-
-  const currentYear = new Date().getFullYear();
-  const startYear = currentYear - 60;
-  const endYear = currentYear + 60;
-  let newYear = startYear;
-  while (newYear <= endYear) {
-    let option = document.createElement("option");
-    option.textContent = newYear;
-    option.value = newYear;
-    option.selected = newYear === selectedYear;
-    calendarYears.appendChild(option);
-    newYear++;
-  }
-
-  const leftArrow = document.getElementsByClassName("calendar-left-arrow")[0];
-
-  leftArrow.addEventListener("click", () => {
-    const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-    const month = parseInt(monthYear.getAttribute("data-month") || 0);
-    const year = parseInt(monthYear.getAttribute("data-year") || 0);
-
-    let newMonth = month === 0 ? 11 : month - 1;
-    let newYear = month === 0 ? year - 1 : year;
-    let newDate = new Date(newYear, newMonth, 1);
-    generateCalendarDays(newDate);
-  });
-
-  const rightArrow = document.getElementsByClassName("calendar-right-arrow")[0];
-
-  rightArrow.addEventListener("click", () => {
-    const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-    const month = parseInt(monthYear.getAttribute("data-month") || 0);
-    const year = parseInt(monthYear.getAttribute("data-year") || 0);
-    let newMonth = month + 1;
-    newMonth = newMonth === 12 ? 0 : newMonth;
-    let newYear = newMonth === 0 ? year + 1 : year;
-    let newDate = new Date(newYear, newMonth, 1);
-    generateCalendarDays(newDate);
-  });
-
-  calendarMonths.addEventListener("change", function () {
-    let newDate = new Date(calendarYears.value, calendarMonths.value, 1);
-    generateCalendarDays(newDate);
-  });
-
-  calendarYears.addEventListener("change", function () {
-    let newDate = new Date(calendarYears.value, calendarMonths.value, 1);
-    generateCalendarDays(newDate);
-  });
-};
-
-function generateCalendarDays(currentDate) {
-  const newDate = new Date(currentDate);
-  const year = newDate.getFullYear();
-  const month = newDate.getMonth();
-  const totalDaysInMonth = getTotalDaysInAMonth(year, month);
-  const firstDayOfWeek = getFirstDayOfWeek(year, month);
-  let calendarDays = document.getElementsByClassName("calendar-days")[0];
-
-  removeAllChildren(calendarDays);
-
-  let firstDay = 1;
-  while (firstDay <= firstDayOfWeek) {
-    let li = document.createElement("li");
-    li.classList.add("calendar-day");
-    calendarDays.appendChild(li);
-    firstDay++;
-  }
-
-  let day = 1;
-  while (day <= totalDaysInMonth) {
-    let li = document.createElement("li");
-    li.textContent = day;
-    li.classList.add("calendar-day");
-    if (todaysDate === day && currentMonth === month && currentYear === year) {
-      li.classList.add("calendar-day-active");
-    }
-    calendarDays.appendChild(li);
-    day++;
-  }
-
-  const monthYear = document.getElementsByClassName("calendar-month-year")[0];
-  monthYear.setAttribute("data-month", month);
-  monthYear.setAttribute("data-year", year);
-  const calendarMonths = document.getElementsByClassName("calendar-months")[0];
-  const calendarYears = document.getElementsByClassName("calendar-years")[0];
-  calendarMonths.value = month;
-  calendarYears.value = year;
-}
-
-function getTotalDaysInAMonth(year, month) {
-  return new Date(year, month + 1, 0).getDate();
-}
-
-function getFirstDayOfWeek(year, month) {
-  return new Date(year, month, 1).getDay();
-}
-
-function removeAllChildren(parent) {
-  while (parent.firstChild) {
-    parent.removeChild(parent.firstChild);
-  }
 }
     </script>
 </body>
