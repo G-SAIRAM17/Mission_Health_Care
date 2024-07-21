@@ -2318,9 +2318,25 @@ def phospital(request,name):
     return render(request,'patient/phospital.html',{'patient_name':name,'hospitals':unique_hospitals})
 
 #--------------Display Selected Hospital Doctors ----------------------------------------------------------
-def doctors_list(request,name,hname):
-    doctor= doctorSignUp.objects.filter(hname=hname)
-    return render(request,'patient/selecteddoctors.html',{'patient_name':name,'hname':hname, 'doctors':doctor})
+def doctors_list(request, name, hname):
+    doctors = doctorSignUp.objects.filter(hname=hname)
+    doctors_with_prices = []
+
+    for doctor in doctors:
+        try:
+            dprice = timeSlot.objects.filter(doctor=doctor).values_list('d_price', flat=True).first()
+        except timeSlot.DoesNotExist:
+            dprice = None
+        doctors_with_prices.append({'doctor': doctor, 'd_price': dprice})
+
+    return render(request, 'patient/selecteddoctors.html', {
+        'patient_name': name,  # Ensure this is being passed
+        'hname': hname,
+        'doctors_with_prices': doctors_with_prices
+    })
+
+
+
 
 #--------------Book Appointments ----------------------------------------------------------
 def book_appointment(request, doctor_id, name):
@@ -2432,31 +2448,44 @@ def ddashboard(request,name):
     doctor=doctorSignUp.objects.get(name=name)
     return render(request, 'doctor/doctor_dashboard.html',{'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
 
-def dtimeslots(request,name):
-    doctor=doctorSignUp.objects.get(name=name)
+def dtimeslots(request, doctor_name):
     if request.method == 'POST':
-      try:
-        date = request.POST['date']
-        time = request.POST['time']
-        max_appointments = request.POST['max_appointments']
-      except MultiValueDictKeyError:
-            return render(request, 'doctor/dtimeslots.html', {
-                'error': 'Please fill in all fields.',
-                'doctor_name': doctor.name,
-                'specialist': doctor.specialist,
-                'hname': doctor.hname
-            })
-
-      new_timeslot = timeSlot(
-            doctor=doctor,
-            date=date,
-            time=time,
-            max_appointments=max_appointments
-        )
-      new_timeslot.save()
+        doctor_id = request.POST.get('doctor_id')
+        if not doctor_id:
+            raise ValidationError("Doctor ID is required.")
         
-      return render(request, 'doctor/dtimeslots.html', {'success': True,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
-    return render(request, 'doctor/dtimeslots.html', {'success': False,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+        try:
+            doctor = doctorSignUp.objects.get(id=doctor_id)
+        except doctorSignUp.DoesNotExist:
+            raise ValidationError("Doctor does not exist.")
+        
+        date = request.POST.get('date')
+        time = request.POST.get('time')
+        max_appointments = request.POST.get('max_appointments')
+        d_price = request.POST.get('d_price')
+        
+        if not date or not time or not max_appointments or not d_price:
+            raise ValidationError("All fields are required.")
+        
+        try:
+            timeSlot.objects.create(
+                doctor=doctor,
+                date=date,
+                time=time,
+                max_appointments=max_appointments,
+                d_price=d_price
+            )
+        except Exception as e:
+            raise ValidationError(f"Error saving time slot: {e}")
+
+        return redirect('some_success_url')  # Replace with your success URL
+
+    # GET request handling code here
+    doctor = get_object_or_404(doctorSignUp, name=doctor_name)
+    return render(request, 'patient/dtimeslots.html', {
+        'doctor_name': doctor_name,
+        'doctor_id': doctor.id  # Ensure this is passed to the template
+    })
 
 #-------------Receptionist Dashboard Page View----------------------------------------------
 def rdashboard(request):

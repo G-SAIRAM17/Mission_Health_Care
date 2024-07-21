@@ -297,16 +297,44 @@
               <div>
                 <p style="color: #000000;margin-left: 500px; padding-top: 10px;font-size: 30px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">Doctors of {{hname}}</p><br>
               </div>
-                    {% for i in doctors %}
+                    {% for entry in doctors_with_prices %}
                     <div class="card" style="margin: 20px;">
-                        <div style="display: flex;align-items: center;justify-content: space-between;">
+                      <div style="display: flex;align-items: center;justify-content: space-between;">
                         <div class="text-content">
-                            <p><span style="color: #b1040e;font-weight: bold;justify-content: left;font-family: Verdana, Geneva, Tahoma, sans-serif;">Doctor Name: </span> <span style="color: #000000;font-weight: bold;justify-content: left;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{i.name}}</span></p>
-                            <p><span style="color: #b1040e;font-weight: bold;justify-content: left;font-family: Verdana, Geneva, Tahoma, sans-serif;">Specialist: </span> <span style="color: #000000;font-weight: bold;justify-content: left;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">{{i.specialist}}</span></p>
+                          <p>
+                            <span
+                              style="color: #b1040e; font-weight: bold; justify-content: left; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                              Doctor Name:
+                            </span>
+                            <span
+                              style="color: #000000; font-weight: bold; justify-content: left; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                              {{ entry.doctor.name }}
+                            </span>
+                          </p>
+                          <p>
+                            <span
+                              style="color: #b1040e; font-weight: bold; justify-content: left; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                              Specialist:
+                            </span>
+                            <span
+                              style="color: #000000; font-weight: bold; justify-content: left; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                              {{ entry.doctor.specialist }}
+                            </span>
+                          </p>
+                          <p>
+                            <span
+                              style="color: #b1040e; font-weight: bold; justify-content: left; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                              Appointment Fee:
+                            </span>
+                            <span
+                              style="color: #000000; font-weight: bold; justify-content: left; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                              {{ entry.d_price }}
+                            </span>
+                          </p>
                         </div>
                         <img style="height:100px; border:5px solid #b1040e; border-radius: 50%;align-items: right;" src="https://imgv3.fotor.com/images/slider-image/A-clear-close-up-photo-of-a-woman.jpg" alt="Placeholder Image">
                     </div>
-                    <form action="{% url 'book_appointment' i.id patient_name %}">
+                    <form method="GET" action="{% url 'book_appointment' entry.doctor.id patient_name %}">
                         <div class="buttons" style="margin-left: 100px;">
                             <button class="blob-btn" style="width:230px !important;border-radius:10px;">
                                 Book an Appointment
