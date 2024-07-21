@@ -73,3 +73,4 @@ class timeSlot(models.Model):
     date = models.DateField()
     time = models.TimeField()
     max_appointments = models.IntegerField()
+    d_price = models.IntegerField()

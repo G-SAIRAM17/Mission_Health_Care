@@ -29,10 +29,11 @@ urlpatterns=[
     #---------------Inside Patient Dashboard urls-------------------------
     path('pdoctor/<str:name>/',views.pdoctor,name='pdoctor'),
     path('phospital/<str:name>/',views.phospital,name='phospital'),
-    path('doctors/<int:doctor_id>/book/<str:name>', views.book_appointment, name='book_appointment'),
+    path('doctors/<int:doctor_id>/book/<str:name>/', views.book_appointment, name='book_appointment'),
     path('doctors_list/<str:name>/<str:hname>/', views.doctors_list, name='doctors_list'),
     path('pupdate/<str:name>/',views.pupdate,name='pupdate'),
-    #---------------Inside Doctor Dashboard urls-------------------------
-    path('dtimeslots/<str:name>/',views.dtimeslots,name='dtimeslots')
-    
+    #---------------Inside Doctor Dashboard urls-------------------------path('dtimeslots/<str:doctor_name>/', views.dtimeslots, name='dtimeslots')
+    path('dtimeslots/<str:name>/', views.dtimeslots, name='dtimeslots')
+
+
 ]

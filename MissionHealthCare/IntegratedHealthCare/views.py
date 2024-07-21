@@ -2318,9 +2318,25 @@ def phospital(request,name):
     return render(request,'patient/phospital.html',{'patient_name':name,'hospitals':unique_hospitals})
 
 #--------------Display Selected Hospital Doctors ----------------------------------------------------------
-def doctors_list(request,name,hname):
-    doctor= doctorSignUp.objects.filter(hname=hname)
-    return render(request,'patient/selecteddoctors.html',{'patient_name':name,'hname':hname, 'doctors':doctor})
+def doctors_list(request, name, hname):
+    doctors = doctorSignUp.objects.filter(hname=hname)
+    doctors_with_prices = []
+
+    for doctor in doctors:
+        try:
+            dprice = timeSlot.objects.filter(doctor=doctor).values_list('d_price', flat=True).first()
+        except timeSlot.DoesNotExist:
+            dprice = None
+        doctors_with_prices.append({'doctor': doctor, 'd_price': dprice})
+
+    return render(request, 'patient/selecteddoctors.html', {
+        'patient_name': name,  # Ensure this is being passed
+        'hname': hname,
+        'doctors_with_prices': doctors_with_prices
+    })
+
+
+
 
 #--------------Book Appointments ----------------------------------------------------------
 def book_appointment(request, doctor_id, name):
@@ -2373,6 +2389,10 @@ def book_appointment(request, doctor_id, name):
         else:
             categorized_slots['evening'].append(slot)
 
+    # Retrieve the price for the selected date
+    price_slot = time_slots.first()
+    price = price_slot.d_price if price_slot else None
+
     # Prepare context for rendering
     context = {
         'patient_name': patient.name,
@@ -2380,7 +2400,8 @@ def book_appointment(request, doctor_id, name):
         'categorized_slots': categorized_slots,
         'selected_date': date_object,
         'today': today,
-        'dates': dates
+        'dates': dates,
+        'd_price': price
     }
 
     return render(request, 'patient/book_appointment.html', context)
@@ -2439,24 +2460,27 @@ def dtimeslots(request,name):
         date = request.POST['date']
         time = request.POST['time']
         max_appointments = request.POST['max_appointments']
+        d_price=request.POST['d_price']
       except MultiValueDictKeyError:
-            return render(request, 'doctor/dtimeslots.html', {
-                'error': 'Please fill in all fields.',
-                'doctor_name': doctor.name,
-                'specialist': doctor.specialist,
-                'hname': doctor.hname
-            })
+        return render(request, 'doctor/dtimeslots.html', {
+        'error': 'Please fill in all fields.',
+        'doctor_name': doctor.name,
+        'specialist': doctor.specialist,
+        'hname': doctor.hname
+        })
 
-      new_timeslot = timeSlot(
-            doctor=doctor,
-            date=date,
-            time=time,
-            max_appointments=max_appointments
-        )
-      new_timeslot.save()
-        
-      return render(request, 'doctor/dtimeslots.html', {'success': True,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+    new_timeslot = timeSlot(
+    doctor=doctor,
+    date=date,
+    time=time,
+    max_appointments=max_appointments,
+    d_price=d_price
+    )
+    new_timeslot.save()
+
+    return render(request, 'doctor/dtimeslots.html', {'success': True,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
     return render(request, 'doctor/dtimeslots.html', {'success': False,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+
 
 #-------------Receptionist Dashboard Page View----------------------------------------------
 def rdashboard(request,name):

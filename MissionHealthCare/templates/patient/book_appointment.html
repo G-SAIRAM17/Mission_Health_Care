@@ -324,10 +324,11 @@
                 <p style="color: #000000;margin-left: 500px; padding-top: 10px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">Dr. {{ doctor.name }}</p>
                 <p style="color: #000000;margin-left: 500px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">{{ doctor.specialist }}</p>
                 <p style="color: #000000;margin-left: 500px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">{{ doctor.hname }}</p>
+                <p style="color: #000000;margin-left: 500px;font-size: 20px;font-weight: bold;font-family: 'Roboto', sans-serif;justify-content: center;">{{ doctor.dprice }}</p>
                 <p style="border-top: 2px solid #b1040e;"></p>
-                <p style="color: #000000; padding-top: 5px; font-size: 20px;font-weight: bold;margin-left: 30px;">
-                    Today's Date: {{ today|date:"F d, Y" }}
-                </p>
+                <span style="display: flex;"><p style="color: #000000; padding-top: 5px; font-size: 20px;font-weight: bold;margin-left: 30px;">
+                    Today's Date: <span style="color: #b1040e;">{{ today|date:"F d, Y" }}</span>
+                </p><p style="color: #000000; padding-top: 5px; font-size: 20px;font-weight: bold;margin-left:500px;">Appointment Fee: <span style='font-size:20px;color: #b1040e;'>&#8377;</span> <span style="color: #b1040e;">{{d_price}}</span></p></span>
             </div>
             <div>
                 <br>
