@@ -2207,7 +2207,7 @@ def rlogin(request):
             if recp.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('rdashboard')  # Replace 'rdashboard' with your actual dashboard URL name
+                return redirect('rdashboard',name=recp.name)  # Replace 'rdashboard' with your actual dashboard URL name
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2231,7 +2231,7 @@ def llogin(request):
             if lb.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('ldashboard')  # Replace 'ldashboard' with your actual dashboard URL name
+                return redirect('ldashboard',name=lb.name)  # Replace 'ldashboard' with your actual dashboard URL name
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2389,6 +2389,10 @@ def book_appointment(request, doctor_id, name):
         else:
             categorized_slots['evening'].append(slot)
 
+    # Retrieve the price for the selected date
+    price_slot = time_slots.first()
+    price = price_slot.d_price if price_slot else None
+
     # Prepare context for rendering
     context = {
         'patient_name': patient.name,
@@ -2396,7 +2400,8 @@ def book_appointment(request, doctor_id, name):
         'categorized_slots': categorized_slots,
         'selected_date': date_object,
         'today': today,
-        'dates': dates
+        'dates': dates,
+        'd_price': price
     }
 
     return render(request, 'patient/book_appointment.html', context)
@@ -2448,52 +2453,44 @@ def ddashboard(request,name):
     doctor=doctorSignUp.objects.get(name=name)
     return render(request, 'doctor/doctor_dashboard.html',{'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
 
-def dtimeslots(request, doctor_name):
+def dtimeslots(request,name):
+    doctor=doctorSignUp.objects.get(name=name)
     if request.method == 'POST':
-        doctor_id = request.POST.get('doctor_id')
-        if not doctor_id:
-            raise ValidationError("Doctor ID is required.")
-        
-        try:
-            doctor = doctorSignUp.objects.get(id=doctor_id)
-        except doctorSignUp.DoesNotExist:
-            raise ValidationError("Doctor does not exist.")
-        
-        date = request.POST.get('date')
-        time = request.POST.get('time')
-        max_appointments = request.POST.get('max_appointments')
-        d_price = request.POST.get('d_price')
-        
-        if not date or not time or not max_appointments or not d_price:
-            raise ValidationError("All fields are required.")
-        
-        try:
-            timeSlot.objects.create(
-                doctor=doctor,
-                date=date,
-                time=time,
-                max_appointments=max_appointments,
-                d_price=d_price
-            )
-        except Exception as e:
-            raise ValidationError(f"Error saving time slot: {e}")
+      try:
+        date = request.POST['date']
+        time = request.POST['time']
+        max_appointments = request.POST['max_appointments']
+        d_price=request.POST['d_price']
+      except MultiValueDictKeyError:
+        return render(request, 'doctor/dtimeslots.html', {
+        'error': 'Please fill in all fields.',
+        'doctor_name': doctor.name,
+        'specialist': doctor.specialist,
+        'hname': doctor.hname
+        })
 
-        return redirect('some_success_url')  # Replace with your success URL
+    new_timeslot = timeSlot(
+    doctor=doctor,
+    date=date,
+    time=time,
+    max_appointments=max_appointments,
+    d_price=d_price
+    )
+    new_timeslot.save()
 
-    # GET request handling code here
-    doctor = get_object_or_404(doctorSignUp, name=doctor_name)
-    return render(request, 'patient/dtimeslots.html', {
-        'doctor_name': doctor_name,
-        'doctor_id': doctor.id  # Ensure this is passed to the template
-    })
+    return render(request, 'doctor/dtimeslots.html', {'success': True,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+    return render(request, 'doctor/dtimeslots.html', {'success': False,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
+
 
 #-------------Receptionist Dashboard Page View----------------------------------------------
-def rdashboard(request):
-    return render(request, 'receptionist/receptionist_dashboard.html')
+def rdashboard(request,name):
+    recep=receptionistSignUp.objects.get(name=name)
+    return render(request, 'receptionist/receptionist_dashboard.html',{'recep_name':name,'recep':recep})
 
 #-------------Lab Technician Dashboard Page View----------------------------------------------
-def ldashboard(request):
-    return render(request, 'lab_technician/lab_technician_dashboard.html')
+def ldashboard(request,name):
+    lab=labtechnicianSignUp.objects.get(name=name)
+    return render(request, 'lab_technician/lab_technician_dashboard.html',{'lab_name':name,'lab':lab})
 
 #-------------Admin Dashboard Page View----------------------------------------------
 def adashboard(request):
