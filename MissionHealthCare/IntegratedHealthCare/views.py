@@ -2207,7 +2207,7 @@ def rlogin(request):
             if recp.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('rdashboard')  # Replace 'rdashboard' with your actual dashboard URL name
+                return redirect('rdashboard',name=recp.name)  # Replace 'rdashboard' with your actual dashboard URL name
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2231,7 +2231,7 @@ def llogin(request):
             if lb.password == password:
                 # Password matches, log in user
                 # Here, you might want to consider using Django's built-in authentication system
-                return redirect('ldashboard')  # Replace 'ldashboard' with your actual dashboard URL name
+                return redirect('ldashboard',name=lb.name)  # Replace 'ldashboard' with your actual dashboard URL name
             else:
                 # Password does not match
                 messages.error(request, 'Invalid password.')
@@ -2459,12 +2459,14 @@ def dtimeslots(request,name):
     return render(request, 'doctor/dtimeslots.html', {'success': False,'doctor_name':name,'specialist':doctor.specialist,'hname':doctor.hname})
 
 #-------------Receptionist Dashboard Page View----------------------------------------------
-def rdashboard(request):
-    return render(request, 'receptionist/receptionist_dashboard.html')
+def rdashboard(request,name):
+    recep=receptionistSignUp.objects.get(name=name)
+    return render(request, 'receptionist/receptionist_dashboard.html',{'recep_name':name,'recep':recep})
 
 #-------------Lab Technician Dashboard Page View----------------------------------------------
-def ldashboard(request):
-    return render(request, 'lab_technician/lab_technician_dashboard.html')
+def ldashboard(request,name):
+    lab=labtechnicianSignUp.objects.get(name=name)
+    return render(request, 'lab_technician/lab_technician_dashboard.html',{'lab_name':name,'lab':lab})
 
 #-------------Admin Dashboard Page View----------------------------------------------
 def adashboard(request):

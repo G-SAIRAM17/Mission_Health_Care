@@ -16,9 +16,9 @@ urlpatterns=[
     path('alogin/',views.alogin,name='alogin'),
     #-----------dashboard urls----------------------------
     path('pdashboard/<str:name>/',views.pdashboard,name='pdashboard'),
-    path('dbashboard/<str:name>',views.ddashboard,name='ddashboard'),
-    path('rdashboard/',views.rdashboard,name='rdashboard'),
-    path('ldashboard/',views.ldashboard,name='ldashboard'),
+    path('dbashboard/<str:name>/',views.ddashboard,name='ddashboard'),
+    path('rdashboard/<str:name>/',views.rdashboard,name='rdashboard'),
+    path('ldashboard/<str:name>/',views.ldashboard,name='ldashboard'),
     path('adashboard/',views.adashboard,name='adashboard'),
     #-----------Success urls----------------------------
     path('psuccess/',views.psuccess,name='psuccess'),
